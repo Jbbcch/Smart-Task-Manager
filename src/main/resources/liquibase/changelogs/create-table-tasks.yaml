@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - preConditions:
+      onFail: MARK_RAN
+      not:
+        - tableExists:
+            tableName: tasks
+  - changeSet:
+      id: 02.10.2025-001
+      author: Jbbcch
+      changes:
+        - createTable:
+            tableName: tasks
+            columns:
+
