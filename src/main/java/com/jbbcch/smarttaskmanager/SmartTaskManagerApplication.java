@@ -1,13 +1,13 @@
-package com.jbbcch.taskmanager;
+package com.jbbcch.smarttaskmanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TaskManagerApplication {
+public class SmartTaskManagerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TaskManagerApplication.class, args);
+		SpringApplication.run(SmartTaskManagerApplication.class, args);
 	}
 
 }

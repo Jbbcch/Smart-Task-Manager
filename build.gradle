@@ -25,10 +25,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// Modulith
+	implementation 'org.springframework.modulith:spring-modulith-starter-core'
+	testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
+	implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
 	// Database
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'org.liquibase:liquibase-core'
-	// Lombok + Tests
+	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testCompileOnly 'org.projectlombok:lombok'
@@ -36,7 +40,7 @@ dependencies {
 	// Mapstruct
 	implementation 'org.mapstruct:mapstruct:1.6.3'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
-	// Testing
+	// Other Tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

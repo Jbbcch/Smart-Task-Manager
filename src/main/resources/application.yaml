@@ -1,6 +1,6 @@
 spring:
   application:
-    name: taskmanager
+    name: Smart-Task-Manager
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
