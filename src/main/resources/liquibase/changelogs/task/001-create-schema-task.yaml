@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: task-001
+      author: Jbbcch
+      changes:
+        - sql:
+            splitStatements: false
+            stripComments: true
+            sql: CREATE SCHEMA IF NOT EXISTS task;

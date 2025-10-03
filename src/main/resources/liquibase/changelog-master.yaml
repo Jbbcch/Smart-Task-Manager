@@ -1,3 +1,18 @@
 databaseChangeLog:
+  # Task
   - include:
-      file: changelogs/
+      file: changelogs/task/001-create-schema-task.yaml
+  - include:
+      file: changelogs/task/002-create-table-projects.yaml
+  - include:
+      file: changelogs/task/003-create-table-tasks.yaml
+  - include:
+      file: changelogs/task/004-create-table-subtasks.yaml
+  - include:
+      file: changelogs/task/005-create-table-assigned-projects.yaml
+  - include:
+      file: changelogs/task/006-create-table-assigned-tasks.yaml
+  # User
+  - include:
+      file: changelogs/user/001-create-schema-user.yaml
+  # Foreign keys

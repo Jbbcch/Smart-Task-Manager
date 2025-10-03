@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - changeSet:
+      id: task-003
+      author: Jbbcch
+      changes:
+        - createTable:
+            schemaName: task
+            tableName: tasks
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+              - column:
+                  name: priority
+                  type: VARCHAR(50)
+              - column:
+                  name: progress
+                  type: FLOAT
+              - column:
+                  name: project_id
+                  type: BIGINT
+              - column:
+                  name: planned_start_date
+                  type: DATETIME
+              - column:
+                  name: planned_end_date
+                  type: DATETIME
+              - column:
+                  name: actual_start_date
+                  type: DATETIME
+              - column:
+                  name: actual_end_date
+                  type: DATETIME
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+              - column:
+                  name: created_by
+                  type: UUID
+              - column:
+                  name: updated_by
+                  type: UUID
