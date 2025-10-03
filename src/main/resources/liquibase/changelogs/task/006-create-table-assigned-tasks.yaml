@@ -2,9 +2,15 @@ databaseChangeLog:
   - changeSet:
       id: task-006
       author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - tableExists:
+              tableName: assigned_tasks
+              schemaName: task_schema
       changes:
         - createTable:
-            schemaName: task
+            schemaName: task_schema
             tableName: assigned_tasks
             columns:
               - column:

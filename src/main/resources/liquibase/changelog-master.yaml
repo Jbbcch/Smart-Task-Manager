@@ -2,17 +2,24 @@ databaseChangeLog:
   # Task
   - include:
       file: changelogs/task/001-create-schema-task.yaml
+      relativeToChangelogFile: true
   - include:
       file: changelogs/task/002-create-table-projects.yaml
+      relativeToChangelogFile: true
   - include:
       file: changelogs/task/003-create-table-tasks.yaml
+      relativeToChangelogFile: true
   - include:
       file: changelogs/task/004-create-table-subtasks.yaml
+      relativeToChangelogFile: true
   - include:
       file: changelogs/task/005-create-table-assigned-projects.yaml
+      relativeToChangelogFile: true
   - include:
       file: changelogs/task/006-create-table-assigned-tasks.yaml
+      relativeToChangelogFile: true
   # User
   - include:
       file: changelogs/user/001-create-schema-user.yaml
+      relativeToChangelogFile: true
   # Foreign keys

@@ -6,4 +6,4 @@ databaseChangeLog:
         - sql:
             splitStatements: false
             stripComments: true
-            sql: CREATE SCHEMA IF NOT EXISTS task;
+            sql: CREATE SCHEMA IF NOT EXISTS task_schema;
