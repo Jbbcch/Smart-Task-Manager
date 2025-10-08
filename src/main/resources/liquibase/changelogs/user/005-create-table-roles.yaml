@@ -1,17 +1,17 @@
 databaseChangeLog:
   - changeSet:
-      id: task-006
+      id: user-005
       author: Jbbcch
       preConditions:
         onFail: MARK_RAN
         not:
           - tableExists:
-              tableName: assigned_tasks
-              schemaName: task_schema
+              tableName: roles
+              schemaName: user_schema
       changes:
         - createTable:
-            schemaName: task_schema
-            tableName: assigned_tasks
+            schemaName: user_schema
+            tableName: roles
             columns:
               - column:
                   name: id
@@ -20,22 +20,26 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: task_id
-                  type: BIGINT
+                  name: name
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
-                  name: user_id
-                  type: UUID
-                  constraints:
-                    nullable: false
+                  name: description
+                  type: TEXT
               - column:
-                  name: assigned_at
+                  name: created_at
                   type: TIMESTAMP
                   constraints:
                     nullable: false
               - column:
-                  name: assigned_by
+                  name: updated_at
+                  type: TIMESTAMP
+              - column:
+                  name: created_by
                   type: UUID
                   constraints:
                     nullable: false
+              - column:
+                  name: updated_by
+                  type: UUID

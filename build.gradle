@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-	// Spring Framework
+	// Spring Boot
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

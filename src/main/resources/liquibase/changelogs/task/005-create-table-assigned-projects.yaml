@@ -22,18 +22,20 @@ databaseChangeLog:
               - column:
                   name: project_id
                   type: BIGINT
+                  constraints:
+                    nullable: false
               - column:
                   name: department_id
                   type: BIGINT
+                  constraints:
+                    nullable: false
               - column:
-                  name: created_at
+                  name: assigned_at
                   type: TIMESTAMP
+                  constraints:
+                    nullable: false
               - column:
-                  name: updated_at
-                  type: TIMESTAMP
-              - column:
-                  name: created_by
+                  name: assigned_by
                   type: UUID
-              - column:
-                  name: updated_by
-                  type: UUID
+                  constraints:
+                    nullable: false

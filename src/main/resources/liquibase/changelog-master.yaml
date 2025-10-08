@@ -22,4 +22,22 @@ databaseChangeLog:
   - include:
       file: changelogs/user/001-create-schema-user.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changelogs/user/002-create-table-departments.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/user/003-create-table-users.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/user/004-create-table-permissions.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/user/005-create-table-roles.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/user/006-create-table-user-roles.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/user/007-create-table-role-permissions.yaml
+      relativeToChangelogFile: true
   # Foreign keys

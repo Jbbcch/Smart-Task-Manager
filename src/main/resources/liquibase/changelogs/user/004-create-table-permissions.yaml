@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: user-004
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - tableExists:
+              tableName: permissions
+              schemaName: user_schema
+      changes:
+        - createTable:
+            schemaName: user_schema
+            tableName: permissions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: action
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: resources
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
