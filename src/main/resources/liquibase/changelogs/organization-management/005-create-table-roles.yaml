@@ -1,17 +1,17 @@
 databaseChangeLog:
   - changeSet:
-      id: task-004
+      id: organization-005
       author: Jbbcch
       preConditions:
         onFail: MARK_RAN
         not:
           - tableExists:
-              tableName: subtasks
-              schemaName: task_schema
+              tableName: roles
+              schemaName: organization_management
       changes:
         - createTable:
-            schemaName: task_schema
-            tableName: subtasks
+            schemaName: organization_management
+            tableName: roles
             columns:
               - column:
                   name: id
@@ -28,14 +28,6 @@ databaseChangeLog:
               - column:
                   name: description
                   type: TEXT
-              - column:
-                  name: status
-                  type: VARCHAR(50)
-              - column:
-                  name: task_id
-                  type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: created_at
                   type: TIMESTAMP

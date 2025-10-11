@@ -1,17 +1,17 @@
 databaseChangeLog:
   - changeSet:
-      id: user-008
+      id: organization-009
       author: Jbbcch
       preConditions:
         onFail: MARK_RAN
         not:
           - tableExists:
-              tableName: actions
-              schemaName: user_schema
+              tableName: resources
+              schemaName: organization_management
       changes:
         - createTable:
-            schemaName: user_schema
-            tableName: actions
+            schemaName: organization_management
+            tableName: resources
             columns:
               - column:
                   name: id
@@ -21,7 +21,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: action
+                  name: resource
                   type: VARCHAR(50)
                   constraints:
                     nullable: false

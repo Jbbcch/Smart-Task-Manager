@@ -1,45 +1,41 @@
 databaseChangeLog:
   - changeSet:
-      id: user-003
+      id: work-004
       author: Jbbcch
       preConditions:
         onFail: MARK_RAN
         not:
           - tableExists:
-              tableName: users
-              schemaName: user_schema
+              tableName: subtasks
+              schemaName: work_management
       changes:
         - createTable:
-            schemaName: user_schema
-            tableName: users
+            schemaName: work_management
+            tableName: subtasks
             columns:
               - column:
                   name: id
-                  type: UUID
+                  type: BIGINT
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: username
+                  name: name
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
-                  name: password
-                  type: VARCHAR(64)
+                  name: description
+                  type: TEXT
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+              - column:
+                  name: task_id
+                  type: BIGINT
                   constraints:
                     nullable: false
-              - column:
-                  name: email
-                  type: VARCHAR(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: first_name
-                  type: VARCHAR(255)
-              - column:
-                  name: last_name
-                  type: VARCHAR(255)
               - column:
                   name: created_at
                   type: TIMESTAMP
@@ -56,9 +52,3 @@ databaseChangeLog:
               - column:
                   name: updated_by
                   type: UUID
-              - column:
-                  name: is_deleted
-                  type: BOOLEAN
-                  defaultValueBoolean: true
-                  constraints:
-                    nullable: false

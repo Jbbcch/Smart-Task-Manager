@@ -1,55 +1,55 @@
 databaseChangeLog:
   # Task
   - include:
-      file: changelogs/task/001-create-schema-task.yaml
+      file: changelogs/work-management/001-create-schema-work-management.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/task/002-create-table-projects.yaml
+      file: changelogs/work-management/002-create-table-projects.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/task/003-create-table-tasks.yaml
+      file: changelogs/work-management/003-create-table-tasks.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/task/004-create-table-subtasks.yaml
+      file: changelogs/work-management/004-create-table-subtasks.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/task/005-create-table-assigned-projects.yaml
+      file: changelogs/work-management/005-create-table-assigned-projects.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/task/006-create-table-assigned-tasks.yaml
+      file: changelogs/work-management/006-create-table-assigned-tasks.yaml
       relativeToChangelogFile: true
   # User
   - include:
-      file: changelogs/user/001-create-schema-user.yaml
+      file: changelogs/organization-management/001-create-schema-organization-management.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/user/002-create-table-departments.yaml
+      file: changelogs/organization-management/002-create-table-departments.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/user/003-create-table-users.yaml
+      file: changelogs/organization-management/003-create-table-users.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/user/004-create-table-permissions.yaml
+      file: changelogs/organization-management/004-create-table-permissions.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/user/005-create-table-roles.yaml
+      file: changelogs/organization-management/005-create-table-roles.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/user/006-create-table-user-roles.yaml
+      file: changelogs/organization-management/006-create-table-user-roles.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/user/007-create-table-role-permissions.yaml
+      file: changelogs/organization-management/007-create-table-role-permissions.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/user/008-create-table-actions.yaml
+      file: changelogs/organization-management/008-create-table-actions.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/user/009-create-table-resources.yaml
+      file: changelogs/organization-management/009-create-table-resources.yaml
       relativeToChangelogFile: true
   # Foreign keys
   - include:
-      file: changelogs/task/007-task-add-fk-constraints.yaml
+      file: changelogs/work-management/007-work-add-fk-constraints.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/user/010-user-add-fk-constraints.yaml
+      file: changelogs/organization-management/010-organization-add-fk-constraints.yaml
       relativeToChangelogFile: true

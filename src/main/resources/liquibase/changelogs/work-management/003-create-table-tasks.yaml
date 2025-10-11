@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: work-003
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - tableExists:
+              tableName: tasks
+              schemaName: work_management
+      changes:
+        - createTable:
+            schemaName: work_management
+            tableName: tasks
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+              - column:
+                  name: priority
+                  type: VARCHAR(50)
+              - column:
+                  name: progress
+                  type: FLOAT
+              - column:
+                  name: project_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: planned_start_date
+                  type: DATETIME
+              - column:
+                  name: planned_end_date
+                  type: DATETIME
+              - column:
+                  name: actual_start_date
+                  type: DATETIME
+              - column:
+                  name: actual_end_date
+                  type: DATETIME
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+              - column:
+                  name: created_by
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_by
+                  type: UUID
