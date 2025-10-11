@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - changeSet:
+      id: task-add-fk-001
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_subtasks_tasks
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: task_schema
+            baseTableName: subtasks
+            baseColumnNames: task_id
+            referencedTableSchema: task
+            referencedTableName: tasks
+            referencedColumnNames: id
+            constraintName: fk_subtasks_tasks
+            onDelete: CASCADE
+
+  - changeSet:
+      id: task-add-fk-002
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_tasks_projects
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: task_schema
+            baseTableName: tasks
+            baseColumnNames: project_id
+            referencedTableSchema: task
+            referencedTableName: projects
+            referencedColumnNames: id
+            constraintName: fk_tasks_projects
+            onDelete: CASCADE
+
+  - changeSet:
+      id: task-add-fk-003
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_assigned_tasks_tasks
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: task_schema
+            baseTableName: assigned_tasks
+            baseColumnNames: task_id
+            referencedTableSchema: task
+            referencedTableName: tasks
+            referencedColumnNames: id
+            constraintName: fk_assigned_tasks_tasks
+            onDelete: CASCADE
+
+  - changeSet:
+      id: task-add-fk-004
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_assigned_tasks_users
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: task_schema
+            baseTableName: assigned_tasks
+            baseColumnNames: user_id
+            referencedTableSchema: user
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_assigned_tasks_users
+            onDelete: CASCADE
+
+  - changeSet:
+      id: task-add-fk-005
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_assigned_projects_projects
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: task_schema
+            baseTableName: assigned_projects
+            baseColumnNames: project_id
+            referencedTableSchema: task
+            referencedTableName: projects
+            referencedColumnNames: id
+            constraintName: fk_assigned_projects_projects
+            onDelete: CASCADE
+
+  - changeSet:
+      id: task-add-fk-006
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_assigned_projects_departments
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: task_schema
+            baseTableName: assigned_projects
+            baseColumnNames: department_id
+            referencedTableSchema: user
+            referencedTableName: departments
+            referencedColumnNames: id
+            constraintName: fk_assigned_projects_departments
+            onDelete: CASCADE

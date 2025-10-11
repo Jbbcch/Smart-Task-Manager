@@ -40,4 +40,16 @@ databaseChangeLog:
   - include:
       file: changelogs/user/007-create-table-role-permissions.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changelogs/user/008-create-table-actions.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/user/009-create-table-resources.yaml
+      relativeToChangelogFile: true
   # Foreign keys
+  - include:
+      file: changelogs/task/007-task-add-fk-constraints.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/user/010-user-add-fk-constraints.yaml
+      relativeToChangelogFile: true

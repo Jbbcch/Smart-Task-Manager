@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - changeSet:
+      id: user-add-fk-001
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_permissions_actions
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: user_schema
+            baseTableName: permissions
+            baseColumnNames: action_id
+            referencedTableSchema: user_schema
+            referencedTableName: actions
+            referencedColumnNames: id
+            constraintName: fk_permissions_actions
+            onDelete: CASCADE
+
+  - changeSet:
+      id: user-add-fk-002
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_permissions_resources
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: user_schema
+            baseTableName: permissions
+            baseColumnNames: resource_id
+            referencedTableSchema: user_schema
+            referencedTableName: resources
+            referencedColumnNames: id
+            constraintName: fk_permissions_resources
+            onDelete: CASCADE
+
+  - changeSet:
+      id: user-add-fk-003
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_user_roles_roles
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: user_schema
+            baseTableName: user_roles
+            baseColumnNames: role_id
+            referencedTableSchema: user_schema
+            referencedTableName: roles
+            referencedColumnNames: id
+            constraintName: fk_user_roles_roles
+            onDelete: CASCADE
+
+  - changeSet:
+      id: user-add-fk-004
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_user_roles_users
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: user_schema
+            baseTableName: user_roles
+            baseColumnNames: user_id
+            referencedTableSchema: user_schema
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_user_roles_users
+            onDelete: CASCADE
+
+  - changeSet:
+      id: user-add-fk-005
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_role_permissions_roles
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: user_schema
+            baseTableName: role_permissions
+            baseColumnNames: role_id
+            referencedTableSchema: user_schema
+            referencedTableName: roles
+            referencedColumnNames: id
+            constraintName: fk_role_permissions_roles
+            onDelete: CASCADE
+
+  - changeSet:
+      id: user-add-fk-006
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_role_permissions_permissions
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: user_schema
+            baseTableName: role_permissions
+            baseColumnNames: permission_id
+            referencedTableSchema: user_schema
+            referencedTableName: permissions
+            referencedColumnNames: id
+            constraintName: fk_role_permissions_permissions
+            onDelete: CASCADE
