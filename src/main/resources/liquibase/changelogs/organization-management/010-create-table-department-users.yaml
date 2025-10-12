@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: organization-010
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - tableExists:
+              tableName: department_users
+              schemaName: organization_management
+      changes:
+        - createTable:
+            schemaName: organization_management
+            tableName: department_users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: department_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: assigned_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: assigned_by
+                  type: UUID
+                  constraints:
+                    nullable: false

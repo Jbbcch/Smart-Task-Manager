@@ -112,3 +112,41 @@ databaseChangeLog:
             referencedColumnNames: id
             constraintName: fk_role_permissions_permissions
             onDelete: CASCADE
+
+  - changeSet:
+      id: organization-add-fk-007
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_department_users_departments
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: organization_management
+            baseTableName: department_users
+            baseColumnNames: department_id
+            referencedTableSchemaName: organization_management
+            referencedTableName: departments
+            referencedColumnNames: id
+            constraintName: fk_department_users_departments
+            onDelete: CASCADE
+
+  - changeSet:
+      id: organization-add-fk-008
+      author: Jbbcch
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - foreignKeyConstraintExists:
+              foreignKeyName: fk_department_users_users
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: organization_management
+            baseTableName: department_users
+            baseColumnNames: user_id
+            referencedTableSchemaName: organization_management
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_department_users_users
+            onDelete: CASCADE

@@ -46,10 +46,13 @@ databaseChangeLog:
   - include:
       file: changelogs/organization-management/009-create-table-resources.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changelogs/organization-management/010-create-table-department-users.yaml
+      relativeToChangelogFile: true
   # Foreign keys
   - include:
       file: changelogs/work-management/007-work-add-fk-constraints.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/organization-management/010-organization-add-fk-constraints.yaml
+      file: changelogs/organization-management/011-organization-add-fk-constraints.yaml
       relativeToChangelogFile: true
