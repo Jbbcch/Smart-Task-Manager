@@ -35,9 +35,6 @@ databaseChangeLog:
                   name: priority
                   type: VARCHAR(50)
               - column:
-                  name: progress
-                  type: FLOAT
-              - column:
                   name: project_id
                   type: BIGINT
                   constraints:
