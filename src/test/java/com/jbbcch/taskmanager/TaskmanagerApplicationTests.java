@@ -1,13 +1,15 @@
 package com.jbbcch.taskmanager;
 
+import com.jbbcch.smarttaskmanager.SmartTaskManagerApplication;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.modulith.core.ApplicationModules;
 
-@SpringBootTest
 class TaskmanagerApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void verifyApplicationModuleStructure() {
+		 var modules = ApplicationModules.of(SmartTaskManagerApplication.class).verify();
+		 modules.forEach(System.out::println);
 	}
 
 }
