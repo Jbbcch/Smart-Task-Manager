@@ -31,7 +31,7 @@ public class Subtask {
     TaskStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "task_id")
+    @JoinColumn(name = "task_id", nullable = false)
     Task task;
 
     @Column(nullable = false, updatable = false)
