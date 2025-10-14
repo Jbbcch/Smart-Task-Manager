@@ -23,6 +23,5 @@ public class TaskRequest {
     LocalDateTime plannedEndDate;
     LocalDateTime actualStartDate;
     LocalDateTime actualEndDate;
-    UUID createdBy;
-    UUID updatedBy;
+    UUID actionBy;
 }
