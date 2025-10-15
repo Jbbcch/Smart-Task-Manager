@@ -1,7 +1,7 @@
 package com.jbbcch.smarttaskmanager.task.mapper;
 
-import com.jbbcch.smarttaskmanager.task.external.dto.SubtaskRequest;
-import com.jbbcch.smarttaskmanager.task.external.dto.SubtaskResponse;
+import com.jbbcch.smarttaskmanager.task.dto.SubtaskRequest;
+import com.jbbcch.smarttaskmanager.task.dto.SubtaskResponse;
 import com.jbbcch.smarttaskmanager.task.model.entity.Subtask;
 import org.mapstruct.Mapper;
 

@@ -1,7 +1,8 @@
-package com.jbbcch.smarttaskmanager.task.external.dto;
+package com.jbbcch.smarttaskmanager.task.dto;
 
 import com.jbbcch.smarttaskmanager.task.model.enums.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +19,7 @@ public class SubtaskRequest {
     String name;
     String description;
     TaskStatus status;
+    @NotNull
+    Long taskId;
     UUID actionBy;
 }

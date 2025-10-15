@@ -1,4 +1,4 @@
-package com.jbbcch.smarttaskmanager.task.external.dto;
+package com.jbbcch.smarttaskmanager.task.dto;
 
 import com.jbbcch.smarttaskmanager.task.model.enums.TaskStatus;
 import lombok.AllArgsConstructor;
