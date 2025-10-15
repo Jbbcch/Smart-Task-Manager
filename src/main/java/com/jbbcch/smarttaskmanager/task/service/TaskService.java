@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +19,7 @@ public class TaskService implements TaskExternalAPI {
     private final TaskMapper taskMapper;
 
     @Override
-    public TaskResponse createTask(TaskRequest request) {
+    public TaskResponse createTaskForProjectId(Long projectId, TaskRequest request) {
         Task task = taskMapper.taskRequestToTask(request);
         task.setCreatedBy(request.getActionBy());
         taskRepository.save(task);
@@ -29,6 +28,8 @@ public class TaskService implements TaskExternalAPI {
 
     @Override
     public TaskResponse updateTaskById(Long id, TaskRequest request) {
+        taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
         Task task = taskMapper.taskRequestToTask(request);
         task.setId(id);
         task.setUpdatedBy(request.getActionBy());
@@ -45,8 +46,8 @@ public class TaskService implements TaskExternalAPI {
     }
 
     @Override
-    public List<TaskResponse> getTasksByProjectId(Long id) {
-        List<Task> taskList = taskRepository.findByProjectId(id);
+    public List<TaskResponse> getTasksByProjectId(Long projectId) {
+        List<Task> taskList = taskRepository.findByProjectId(projectId);
         return taskList.stream()
                 .map(taskMapper::taskToTaskResponse)
                 .toList();
