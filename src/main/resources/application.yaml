@@ -19,3 +19,8 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/liquibase/changelog-master.yaml
+
+  springdoc:
+    swagger-ui:
+      enabled: true
+      path: /swagger-ui.html
