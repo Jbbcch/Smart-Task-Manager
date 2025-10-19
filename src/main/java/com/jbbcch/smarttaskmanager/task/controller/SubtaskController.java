@@ -17,8 +17,8 @@ public class SubtaskController {
 
     @PostMapping
     public ResponseEntity<SubtaskResponse> createTask(@RequestBody @Valid SubtaskRequest request) {
-        SubtaskResponse response = subtaskInternalAPI.createSubtask(request);
-        return ResponseEntity.ok(response);
+        SubtaskResponse createdSubtask = subtaskInternalAPI.createSubtask(request);
+        return ResponseEntity.ok(createdSubtask);
     }
 
     @PutMapping("/{id}")
@@ -26,13 +26,13 @@ public class SubtaskController {
             @PathVariable Long id,
             @RequestBody @Valid SubtaskRequest request
     ) {
-        SubtaskResponse response = subtaskInternalAPI.updateSubtaskById(id, request);
-        return ResponseEntity.ok(response);
+        SubtaskResponse updatedSubtask = subtaskInternalAPI.updateSubtaskById(id, request);
+        return ResponseEntity.ok(updatedSubtask);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<SubtaskResponse> deleteTask(@PathVariable Long id) {
-        SubtaskResponse response = subtaskInternalAPI.deleteSubtaskById(id);
-        return ResponseEntity.ok(response);
+        SubtaskResponse deletedSubtask = subtaskInternalAPI.deleteSubtaskById(id);
+        return ResponseEntity.ok(deletedSubtask);
     }
 }

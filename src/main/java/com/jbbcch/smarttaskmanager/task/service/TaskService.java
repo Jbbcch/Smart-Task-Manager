@@ -1,8 +1,9 @@
 package com.jbbcch.smarttaskmanager.task.service;
 
 import com.jbbcch.smarttaskmanager.task.api.TaskInternalAPI;
+import com.jbbcch.smarttaskmanager.task.api.external.TaskExternalAPI;
 import com.jbbcch.smarttaskmanager.task.dto.TaskRequest;
-import com.jbbcch.smarttaskmanager.task.dto.TaskResponse;
+import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
 import com.jbbcch.smarttaskmanager.task.mapper.TaskMapper;
 import com.jbbcch.smarttaskmanager.task.model.entity.Task;
 import com.jbbcch.smarttaskmanager.task.repository.TaskRepository;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TaskService implements TaskInternalAPI {
+public class TaskService implements TaskInternalAPI, TaskExternalAPI {
 
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
