@@ -5,7 +5,7 @@ import com.jbbcch.smarttaskmanager.task.dto.SubtaskResponse;
 import com.jbbcch.smarttaskmanager.task.model.entity.Subtask;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SubtaskMapper {
     SubtaskResponse subtaskToSubtaskResponse(Subtask subtask);
     Subtask subtaskRequestToSubtask(SubtaskRequest subtaskRequest);
