@@ -53,8 +53,16 @@ public class TaskService implements TaskInternalAPI, TaskExternalAPI {
     @Override
     public List<TaskResponse> getTasksByProjectId(Long projectId) {
         List<Task> taskList = taskRepository.findByProjectId(projectId);
+
         return taskList.stream()
-                .map(taskMapper::taskToTaskResponse)
-                .toList();
+                .map(task -> {
+                    TaskResponse taskResponse = taskMapper.taskToTaskResponse(task);
+                    taskResponse.setSubtaskCount(getSubtaskCountByTask(task));
+                    return taskResponse;
+                }).toList();
+    }
+
+    public Integer getSubtaskCountByTask(Task task) {
+        return task.getSubtasks().size();
     }
 }
