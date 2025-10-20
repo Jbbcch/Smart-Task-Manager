@@ -22,10 +22,7 @@ public class TaskResponse {
     String description;
     TaskStatus status;
     TaskPriority priority;
-    List<SubtaskResponse> subtasks;
-    LocalDateTime plannedStartDate;
     LocalDateTime plannedEndDate;
-    LocalDateTime actualStartDate;
     LocalDateTime actualEndDate;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;

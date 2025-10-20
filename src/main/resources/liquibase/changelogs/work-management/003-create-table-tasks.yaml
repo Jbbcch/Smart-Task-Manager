@@ -40,13 +40,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: planned_start_date
-                  type: TIMESTAMP
-              - column:
                   name: planned_end_date
-                  type: TIMESTAMP
-              - column:
-                  name: actual_start_date
                   type: TIMESTAMP
               - column:
                   name: actual_end_date

@@ -44,11 +44,7 @@ public class Task {
     @Fetch(FetchMode.JOIN)
     List<Subtask> subtasks;
 
-    LocalDateTime plannedStartDate;
-
     LocalDateTime plannedEndDate;
-
-    LocalDateTime actualStartDate;
 
     LocalDateTime actualEndDate;
 
