@@ -27,8 +27,7 @@ public class Subtask {
     @Lob
     String description;
 
-    @Enumerated(EnumType.STRING)
-    TaskStatus status;
+    Boolean done;
 
     @ManyToOne
     @JoinColumn(name = "task_id", nullable = false)

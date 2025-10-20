@@ -29,8 +29,8 @@ databaseChangeLog:
                   name: description
                   type: TEXT
               - column:
-                  name: status
-                  type: VARCHAR(50)
+                  name: done
+                  type: BOOLEAN
               - column:
                   name: task_id
                   type: BIGINT
