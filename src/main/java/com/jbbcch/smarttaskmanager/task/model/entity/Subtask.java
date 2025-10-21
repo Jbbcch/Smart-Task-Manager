@@ -1,6 +1,5 @@
 package com.jbbcch.smarttaskmanager.task.model.entity;
 
-import com.jbbcch.smarttaskmanager.task.model.enums.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -13,7 +12,6 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Getter
 @Setter
 public class Subtask {
