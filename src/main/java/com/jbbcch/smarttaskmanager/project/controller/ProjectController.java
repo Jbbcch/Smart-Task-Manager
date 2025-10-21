@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/projects")
 @RequiredArgsConstructor
 public class ProjectController {
     private final ProjectInternalAPI projectInternalAPI;
