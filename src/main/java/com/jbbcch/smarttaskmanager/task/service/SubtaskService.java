@@ -1,6 +1,7 @@
 package com.jbbcch.smarttaskmanager.task.service;
 
 import com.jbbcch.smarttaskmanager.task.api.SubtaskInternalAPI;
+import com.jbbcch.smarttaskmanager.task.api.external.SubtaskExternalAPI;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskResponse;
 import com.jbbcch.smarttaskmanager.task.mapper.SubtaskMapper;
@@ -10,9 +11,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class SubtaskService implements SubtaskInternalAPI {
+public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
 
     private final SubtaskRepository subtaskRepository;
     private final SubtaskMapper subtaskMapper;
@@ -45,5 +48,14 @@ public class SubtaskService implements SubtaskInternalAPI {
                 .orElseThrow(() -> new RuntimeException("Subtask not found"));
         subtaskRepository.deleteById(id);
         return subtaskMapper.subtaskToSubtaskResponse(deletedSubtask);
+    }
+
+    @Override
+    public List<SubtaskResponse> getSubtasksByTaskId(Long taskId) {
+        List<Subtask> subtaskList = subtaskRepository.findByTaskId(taskId);
+
+        return subtaskList.stream()
+                .map(subtaskMapper::subtaskToSubtaskResponse)
+                .toList();
     }
 }

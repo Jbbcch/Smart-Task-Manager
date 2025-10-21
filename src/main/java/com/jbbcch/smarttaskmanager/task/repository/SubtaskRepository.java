@@ -4,6 +4,9 @@ import com.jbbcch.smarttaskmanager.task.model.entity.Subtask;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface SubtaskRepository extends CrudRepository<Subtask, Long> {
+    List<Subtask> findByTaskId(Long taskId);
 }
