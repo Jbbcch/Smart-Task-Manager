@@ -1,10 +1,8 @@
 package com.jbbcch.smarttaskmanager.task.dto;
 
 import com.jbbcch.smarttaskmanager.task.model.enums.TaskStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,6 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SubtaskResponse {
     Long id;
     String name;
