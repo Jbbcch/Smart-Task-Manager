@@ -5,6 +5,7 @@ import com.jbbcch.smarttaskmanager.project.dto.ProjectRequest;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectResponse;
 import com.jbbcch.smarttaskmanager.task.api.external.TaskExternalAPI;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest request) {
+    ResponseEntity<ProjectResponse> createProject(@RequestBody @Valid ProjectRequest request) {
         ProjectResponse createdProject = projectInternalAPI.createProject(request);
         return ResponseEntity.ok(createdProject);
     }
@@ -39,7 +40,7 @@ public class ProjectController {
     @PutMapping("/{id}")
     ResponseEntity<ProjectResponse> updateProjectById(
             @PathVariable Long id,
-            @RequestBody ProjectRequest request
+            @RequestBody @Valid ProjectRequest request
     ) {
         ProjectResponse updatedProject = projectInternalAPI.updateProjectById(id, request);
         return ResponseEntity.ok(updatedProject);

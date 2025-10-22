@@ -3,6 +3,7 @@ package com.jbbcch.smarttaskmanager.department.controller;
 import com.jbbcch.smarttaskmanager.department.api.DepartmentInternalAPI;
 import com.jbbcch.smarttaskmanager.department.dto.DepartmentRequest;
 import com.jbbcch.smarttaskmanager.department.dto.DepartmentResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<DepartmentResponse> createDepartment(@RequestBody DepartmentRequest request) {
+    public ResponseEntity<DepartmentResponse> createDepartment(@RequestBody @Valid DepartmentRequest request) {
         DepartmentResponse createdDepartment = departmentInternalAPI.createDepartment(request);
         return ResponseEntity.ok(createdDepartment);
     }
@@ -29,7 +30,7 @@ public class DepartmentController {
     @PutMapping("/{id}")
     public ResponseEntity<DepartmentResponse> updateDepartmentById(
             @PathVariable Long id,
-            @RequestBody DepartmentRequest request
+            @RequestBody @Valid DepartmentRequest request
     ) {
         DepartmentResponse updatedDepartment = departmentInternalAPI.updateDepartmentById(id, request);
         return ResponseEntity.ok(updatedDepartment);
