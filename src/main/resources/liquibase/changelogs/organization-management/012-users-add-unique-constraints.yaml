@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: organization-012
+      author: Jbbcch
+      changes:
+        - addUniqueConstraint:
+            schemaName: organization_management
+            tableName: users
+            columnNames: username, email

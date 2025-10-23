@@ -21,13 +21,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String username;
 
     @Column(nullable = false)
     String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String email;
 
     String firstName;
