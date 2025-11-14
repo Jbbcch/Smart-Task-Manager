@@ -1,43 +1,5 @@
 databaseChangeLog:
   - changeSet:
-      id: organization-add-fk-001
-      author: Jbbcch
-      preConditions:
-        onFail: MARK_RAN
-        not:
-          - foreignKeyConstraintExists:
-              foreignKeyName: fk_permissions_actions
-      changes:
-        - addForeignKeyConstraint:
-            baseTableSchemaName: organization_management
-            baseTableName: permissions
-            baseColumnNames: action_id
-            referencedTableSchemaName: organization_management
-            referencedTableName: actions
-            referencedColumnNames: id
-            constraintName: fk_permissions_actions
-            onDelete: CASCADE
-
-  - changeSet:
-      id: organization-add-fk-002
-      author: Jbbcch
-      preConditions:
-        onFail: MARK_RAN
-        not:
-          - foreignKeyConstraintExists:
-              foreignKeyName: fk_permissions_resources
-      changes:
-        - addForeignKeyConstraint:
-            baseTableSchemaName: organization_management
-            baseTableName: permissions
-            baseColumnNames: resource_id
-            referencedTableSchemaName: organization_management
-            referencedTableName: resources
-            referencedColumnNames: id
-            constraintName: fk_permissions_resources
-            onDelete: CASCADE
-
-  - changeSet:
       id: organization-add-fk-003
       author: Jbbcch
       preConditions:

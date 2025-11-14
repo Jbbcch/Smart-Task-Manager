@@ -21,12 +21,12 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: action_id
-                  type: BIGINT
+                  name: action
+                  type: VARCHAR(50)
                   constraints:
                     nullable: false
               - column:
-                  name: resource_id
-                  type: BIGINT
+                  name: resource
+                  type: VARCHAR(50)
                   constraints:
                     nullable: false

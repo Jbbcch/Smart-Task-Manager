@@ -41,12 +41,6 @@ databaseChangeLog:
       file: changelogs/organization-management/007-create-table-role-permissions.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/organization-management/008-create-table-actions.yaml
-      relativeToChangelogFile: true
-  - include:
-      file: changelogs/organization-management/009-create-table-resources.yaml
-      relativeToChangelogFile: true
-  - include:
       file: changelogs/organization-management/010-create-table-department-users.yaml
       relativeToChangelogFile: true
   # Foreign keys
