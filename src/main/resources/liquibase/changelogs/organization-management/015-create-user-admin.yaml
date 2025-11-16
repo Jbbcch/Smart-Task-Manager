@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: organization-15
+      author: Jbbcch
+      changes:
+        - insert:
+            tableName: users
+            schemaName: organization_management
+            columns:
+              - column:
+                  name: id
+                  value: 00000000-0000-0000-0000-000000000000
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  value: $2a$12$IkJ8nTDMtCxHO41vfa21PukiS4Lsw6oKPXivQjzH6w2H93tuhZnPC # admin
+              - column:
+                  name: created_at
+                  valueDate: 2025-11-16T00:00:00
+              - column:
+                  name: created_by
+                  value: 00000000-0000-0000-0000-000000000000
+        - insert:
+            tableName: user_roles
+            schemaName: organization_management
+            columns:
+              - column:
+                  name: id
+                  value: 0
+              - column:
+                  name: user_id
+                  value: 00000000-0000-0000-0000-000000000000
+              - column:
+                  name: role_id
+                  value: 0
+              - column:
+                  name: assigned_at
+                  value: 2025-11-16T00:00:00
+              - column:
+                  name: assigned_by
+                  value: 00000000-0000-0000-0000-000000000000

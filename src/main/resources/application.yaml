@@ -24,3 +24,11 @@ spring:
     swagger-ui:
       enabled: true
       path: /swagger-ui.html
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
+        web:
+          filter: debug

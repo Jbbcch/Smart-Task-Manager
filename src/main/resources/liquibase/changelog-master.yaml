@@ -50,3 +50,13 @@ databaseChangeLog:
   - include:
       file: changelogs/organization-management/011-organization-add-fk-constraints.yaml
       relativeToChangelogFile: true
+  # Permissions and Roles
+  - include:
+      file: changelogs/organization-management/013-create-permissions.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/organization-management/014-create-role-admin.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/organization-management/015-create-user-admin.yaml # this one is for testing only
+      relativeToChangelogFile: true
