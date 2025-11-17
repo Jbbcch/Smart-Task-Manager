@@ -18,19 +18,19 @@ public class UserController {
     private final UserInternalAPI userInternalAPI;
 
     @PostMapping
-    ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest request) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest request) {
         UserResponse createdUser = userInternalAPI.createUser(request);
         return ResponseEntity.ok(createdUser);
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
+    public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
         UserResponse user = userInternalAPI.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<UserResponse> updateUserById(
+    public ResponseEntity<UserResponse> updateUserById(
             @PathVariable UUID id,
             @RequestBody @Valid UserRequest request
     ) {
@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<UserResponse> softDeleteUserById(@PathVariable UUID id) {
+    public ResponseEntity<UserResponse> softDeleteUserById(@PathVariable UUID id) {
         UserResponse deletedUser = userInternalAPI.deleteUserById(id);
         return ResponseEntity.ok(deletedUser);
     }
