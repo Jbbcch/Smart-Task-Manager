@@ -1,7 +1,12 @@
 databaseChangeLog:
   - changeSet:
-      id: organization-15
+      id: organization-010
       author: Jbbcch
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            rowExists:
+              - where: id = 00000000-0000-0000-0000-000000000000
       changes:
         - insert:
             tableName: users

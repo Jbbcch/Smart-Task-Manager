@@ -1,5 +1,7 @@
 package com.jbbcch.smarttaskmanager.security.shared;
 
 public enum ScopeType {
-    GLOBAL
+    GLOBAL,
+    DEPARTMENT,
+    PROJECT
 }

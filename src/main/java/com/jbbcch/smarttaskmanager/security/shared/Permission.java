@@ -1,28 +1,27 @@
 package com.jbbcch.smarttaskmanager.security.shared;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Table(name = "permissions", schema = "organization_management")
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class Permission {
-    @Id
-    Long id;
 
-    String action;
+    public enum Action {
+        CREATE, READ, UPDATE, DELETE
+    }
 
-    String resource;
+    public enum Resource {
+        DEPARTMENT, USER, ROLE, PROJECT, TASK, SUBTASK
+    }
+
+    private final Action action;
+    private final Resource resource;
 
     @Override
     public String toString() {
-        return action + "_" + resource;
+        return action.name() + "_" + resource.name();
     }
 }

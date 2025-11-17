@@ -29,34 +29,28 @@ databaseChangeLog:
       file: changelogs/organization-management/003-create-table-users.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/organization-management/004-create-table-permissions.yaml
+      file: changelogs/organization-management/004-create-table-roles.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/organization-management/005-create-table-roles.yaml
+      file: changelogs/organization-management/005-create-table-user-roles.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/organization-management/006-create-table-user-roles.yaml
+      file: changelogs/organization-management/006-create-table-role-permissions.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/organization-management/007-create-table-role-permissions.yaml
-      relativeToChangelogFile: true
-  - include:
-      file: changelogs/organization-management/010-create-table-department-users.yaml
+      file: changelogs/organization-management/007-create-table-department-users.yaml
       relativeToChangelogFile: true
   # Foreign keys
   - include:
       file: changelogs/work-management/007-work-add-fk-constraints.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/organization-management/011-organization-add-fk-constraints.yaml
+      file: changelogs/organization-management/008-organization-add-fk-constraints.yaml
       relativeToChangelogFile: true
   # Permissions and Roles
   - include:
-      file: changelogs/organization-management/013-create-permissions.yaml
+      file: changelogs/organization-management/010-create-role-admin.yaml
       relativeToChangelogFile: true
   - include:
-      file: changelogs/organization-management/014-create-role-admin.yaml
-      relativeToChangelogFile: true
-  - include:
-      file: changelogs/organization-management/015-create-user-admin.yaml # this one is for testing only
+      file: changelogs/organization-management/011-create-user-admin.yaml # this one is for testing only
       relativeToChangelogFile: true

@@ -1,31 +1,42 @@
 databaseChangeLog:
   - changeSet:
-      id: organization-004
+      id: organization-005
       author: Jbbcch
       preConditions:
         onFail: MARK_RAN
         not:
           - tableExists:
-              tableName: permissions
+              tableName: user_roles
               schemaName: organization_management
       changes:
         - createTable:
             schemaName: organization_management
-            tableName: permissions
+            tableName: user_roles
             columns:
               - column:
                   name: id
                   type: BIGINT
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: action
-                  type: VARCHAR(50)
+                  name: user_id
+                  type: UUID
                   constraints:
                     nullable: false
               - column:
-                  name: resource
-                  type: VARCHAR(50)
+                  name: role_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: assigned_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: assigned_by
+                  type: UUID
                   constraints:
                     nullable: false

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: organization-add-fk-003
+      id: organization-add-fk-001
       author: Jbbcch
       preConditions:
         onFail: MARK_RAN
@@ -19,7 +19,7 @@ databaseChangeLog:
             onDelete: CASCADE
 
   - changeSet:
-      id: organization-add-fk-004
+      id: organization-add-fk-002
       author: Jbbcch
       preConditions:
         onFail: MARK_RAN
@@ -38,7 +38,7 @@ databaseChangeLog:
             onDelete: CASCADE
 
   - changeSet:
-      id: organization-add-fk-005
+      id: organization-add-fk-003
       author: Jbbcch
       preConditions:
         onFail: MARK_RAN
@@ -57,26 +57,7 @@ databaseChangeLog:
             onDelete: CASCADE
 
   - changeSet:
-      id: organization-add-fk-006
-      author: Jbbcch
-      preConditions:
-        onFail: MARK_RAN
-        not:
-          - foreignKeyConstraintExists:
-              foreignKeyName: fk_role_permissions_permissions
-      changes:
-        - addForeignKeyConstraint:
-            baseTableSchemaName: organization_management
-            baseTableName: role_permissions
-            baseColumnNames: permission_id
-            referencedTableSchemaName: organization_management
-            referencedTableName: permissions
-            referencedColumnNames: id
-            constraintName: fk_role_permissions_permissions
-            onDelete: CASCADE
-
-  - changeSet:
-      id: organization-add-fk-007
+      id: organization-add-fk-004
       author: Jbbcch
       preConditions:
         onFail: MARK_RAN
@@ -95,7 +76,7 @@ databaseChangeLog:
             onDelete: CASCADE
 
   - changeSet:
-      id: organization-add-fk-008
+      id: organization-add-fk-005
       author: Jbbcch
       preConditions:
         onFail: MARK_RAN

@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: organization-009
+      author: Jbbcch
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            rowExists:
+              - where: id = 0
+      changes:
+        - insert:
+            tableName: roles
+            schemaName: organization_management
+            columns:
+              - column:
+                  name: id
+                  value: 0
+              - column:
+                  name: name
+                  value: admin
+              - column:
+                  name: description
+                  value: Administrator role with full access
+              - column:
+                  name: created_at
+                  valueDate: 2025-11-16T00:00:00
+              - column:
+                  name: created_by
+                  value: 00000000-0000-0000-0000-000000000000
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |
+              INSERT INTO organization_management.role_permissions (role_id, permission, scope, scope_id)
+              VALUES
+              (0, 'CREATE_DEPARTMENT', 'GLOBAL', NULL),
+              (0, 'CREATE_USER', 'GLOBAL', NULL),
+              (0, 'CREATE_ROLE', 'GLOBAL', NULL),
+              (0, 'CREATE_PROJECT', 'GLOBAL', NULL),
+              (0, 'CREATE_TASK', 'GLOBAL', NULL),
+              (0, 'CREATE_SUBTASK', 'GLOBAL', NULL),
+              (0, 'READ_DEPARTMENT', 'GLOBAL', NULL),
+              (0, 'READ_USER', 'GLOBAL', NULL),
+              (0, 'READ_ROLE', 'GLOBAL', NULL),
+              (0, 'READ_PROJECT', 'GLOBAL', NULL),
+              (0, 'READ_TASK', 'GLOBAL', NULL),
+              (0, 'READ_SUBTASK', 'GLOBAL', NULL),
+              (0, 'UPDATE_DEPARTMENT', 'GLOBAL', NULL),
+              (0, 'UPDATE_USER', 'GLOBAL', NULL),
+              (0, 'UPDATE_ROLE', 'GLOBAL', NULL),
+              (0, 'UPDATE_PROJECT', 'GLOBAL', NULL),
+              (0, 'UPDATE_TASK', 'GLOBAL', NULL),
+              (0, 'UPDATE_SUBTASK', 'GLOBAL', NULL),
+              (0, 'DELETE_DEPARTMENT', 'GLOBAL', NULL),
+              (0, 'DELETE_USER', 'GLOBAL', NULL),
+              (0, 'DELETE_ROLE', 'GLOBAL', NULL),
+              (0, 'DELETE_PROJECT', 'GLOBAL', NULL),
+              (0, 'DELETE_TASK', 'GLOBAL', NULL),
+              (0, 'DELETE_SUBTASK', 'GLOBAL', NULL),
+

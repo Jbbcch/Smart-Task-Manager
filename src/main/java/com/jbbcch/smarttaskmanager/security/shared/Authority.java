@@ -19,9 +19,8 @@ public class Authority {
 
     Long roleId;
 
-    @ManyToOne
-    @Fetch(FetchMode.JOIN)
-    Permission permission;
+    @Enumerated(EnumType.STRING)
+    String permission;
 
     @Enumerated(EnumType.STRING)
     ScopeType scope;

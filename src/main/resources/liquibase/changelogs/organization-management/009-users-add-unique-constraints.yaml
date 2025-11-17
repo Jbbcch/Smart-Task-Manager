@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: organization-012
+      id: organization-008
       author: Jbbcch
       changes:
         - addUniqueConstraint:
