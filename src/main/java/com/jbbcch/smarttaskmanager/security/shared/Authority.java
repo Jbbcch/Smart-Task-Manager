@@ -31,4 +31,31 @@ public class Authority {
     public String toString() {
         return permission + "_" + scope + ":" + scopeId;
     }
+
+    public static Authority fromString(String authorityString) {
+        try {
+            String[] parts = authorityString.split("_");
+
+            // crude way of checking whether permission is valid;
+            // also the concept of converting a string to an object and back
+            // just to check its validity and still have only 1 line of code
+            // is so funny to me that I'm gonna just:
+            String permission = Permission.fromString(parts[0]).toString();
+            // leave this as is. it's so stupid, I love it.
+
+            String[] scopePart = parts[1].split(":");
+
+            ScopeType scope = ScopeType.valueOf(scopePart[0]);
+            long scopeId = Long.parseLong(scopePart[1]);
+
+            Authority newAuthority = new Authority();
+            newAuthority.permission = permission;
+            newAuthority.scope = scope;
+            newAuthority.scopeId = scopeId;
+
+            return newAuthority;
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid authority string");
+        }
+    }
 }

@@ -13,4 +13,8 @@ public interface AuthorityRepository extends CrudRepository<Authority, Long> {
             "JOIN UserRole ur ON ur.roleId = a.roleId " +
             "WHERE ur.userId = :userId")
     List<Authority> findDistinctAuthoritiesByUserId(UUID userId);
+
+    List<Authority> findAuthoritiesByRoleId(Long roleId);
+
+    void deleteByRoleId(Long roleId);
 }
