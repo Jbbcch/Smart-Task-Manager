@@ -5,6 +5,7 @@ import com.jbbcch.smarttaskmanager.security.role.api.RoleInternalAPI;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleRequest;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleResponse;
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleRequest;
+import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleResponse;
 import com.jbbcch.smarttaskmanager.security.role.mapper.RoleMapper;
 import com.jbbcch.smarttaskmanager.security.role.mapper.UserRoleMapper;
 import com.jbbcch.smarttaskmanager.security.role.model.entity.Role;
@@ -44,7 +45,7 @@ public class RoleService implements RoleInternalAPI, RoleAssignmentAPI {
         RoleResponse roleResponse = roleMapper.roleToRoleResponse(createdRole);
         roleResponse.setAuthorities(roleRequest.getAuthorities());
         // don't like this ^^^, but also don't care enough to write anything better
-        // was there a reason to not have List<Authority> in Role? I don't remember.
+        // was there a reason not to have List<Authority> in Role? I don't remember.
 
         return roleResponse;
     }
@@ -94,19 +95,21 @@ public class RoleService implements RoleInternalAPI, RoleAssignmentAPI {
         return roleMapper.roleToRoleResponse(deletedRole);
     }
 
-    // TODO: add exceptions to these (and everything, really).
-
     @Override
     @Transactional
-    public void assignRoleToUser(UserRoleRequest request) {
+    public UserRoleResponse assignRoleToUser(UserRoleRequest request) {
         UserRole assignedUserRole = userRoleMapper.userRoleRequestToUserRole(request);
         userRoleRepository.save(assignedUserRole);
+        assignedUserRole.setAssignedBy(request.getActionBy());
+        return userRoleMapper.userRoleToUserRoleResponse(assignedUserRole);
     }
 
     @Override
     @Transactional
-    public void removeRoleFromUser(UserRoleRequest request) {
-        UserRole removedUserRole = userRoleMapper.userRoleRequestToUserRole(request);
-        userRoleRepository.delete(removedUserRole);
+    public UserRoleResponse removeRoleFromUserById(Long id) {
+        UserRole removedUserRole = userRoleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User-Role relation not found"));
+        userRoleRepository.deleteById(id);
+        return userRoleMapper.userRoleToUserRoleResponse(removedUserRole);
     }
 }

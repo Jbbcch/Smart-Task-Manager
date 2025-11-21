@@ -1,8 +1,9 @@
 package com.jbbcch.smarttaskmanager.security.role.api;
 
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleRequest;
+import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleResponse;
 
 public interface RoleAssignmentAPI {
-    void assignRoleToUser(UserRoleRequest request);
-    void removeRoleFromUser(UserRoleRequest request);
+    UserRoleResponse assignRoleToUser(UserRoleRequest request);
+    UserRoleResponse removeRoleFromUserById(Long id);
 }
