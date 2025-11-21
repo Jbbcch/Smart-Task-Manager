@@ -1,8 +1,6 @@
 package com.jbbcch.smarttaskmanager.task.dto;
 
-import com.jbbcch.smarttaskmanager.task.model.enums.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,7 +14,5 @@ public class SubtaskRequest {
     @NotBlank(message = "Subtask name may not be blank")
     String name;
     String description;
-    @NotNull
-    Long taskId;
     UUID actionBy;
 }

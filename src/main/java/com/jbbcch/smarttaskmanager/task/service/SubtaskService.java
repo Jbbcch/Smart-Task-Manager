@@ -6,9 +6,13 @@ import com.jbbcch.smarttaskmanager.task.dto.SubtaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskResponse;
 import com.jbbcch.smarttaskmanager.task.mapper.SubtaskMapper;
 import com.jbbcch.smarttaskmanager.task.model.entity.Subtask;
+import com.jbbcch.smarttaskmanager.task.model.entity.Task;
 import com.jbbcch.smarttaskmanager.task.repository.SubtaskRepository;
+import com.jbbcch.smarttaskmanager.task.repository.TaskRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,14 +23,31 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
 
     private final SubtaskRepository subtaskRepository;
     private final SubtaskMapper subtaskMapper;
+    private final TaskRepository taskRepository;
 
     @Override
     @Transactional
-    public SubtaskResponse createSubtask(SubtaskRequest request) {
+    public SubtaskResponse createSubtask(Long taskId, SubtaskRequest request) {
         Subtask subtask = subtaskMapper.subtaskRequestToSubtask(request);
+
+        Task task = new Task();
+        task.setId(taskId);
+        subtask.setTask(task);
+
         subtask.setCreatedBy(request.getActionBy());
         subtask.setDone(false);
         subtaskRepository.save(subtask);
+
+        try {
+            taskRepository.save(task);
+        } catch (DataIntegrityViolationException ex) {
+            if (ex.getCause() instanceof ConstraintViolationException cve &&
+                    "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
+                throw new RuntimeException("Project with id " + task.getProjectId() + " does not exist");
+            }
+            throw ex;
+        }
+
         return subtaskMapper.subtaskToSubtaskResponse(subtask);
     }
 

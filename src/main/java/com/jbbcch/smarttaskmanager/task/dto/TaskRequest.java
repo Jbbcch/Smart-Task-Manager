@@ -3,7 +3,6 @@ package com.jbbcch.smarttaskmanager.task.dto;
 import com.jbbcch.smarttaskmanager.task.model.enums.TaskPriority;
 import com.jbbcch.smarttaskmanager.task.model.enums.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -24,7 +23,5 @@ public class TaskRequest {
     LocalDateTime plannedEndDate;
     LocalDateTime actualStartDate;
     LocalDateTime actualEndDate;
-    @NotNull
-    Long projectId;
     UUID actionBy;
 }

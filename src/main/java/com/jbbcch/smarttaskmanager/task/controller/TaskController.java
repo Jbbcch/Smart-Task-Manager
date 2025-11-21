@@ -2,6 +2,7 @@ package com.jbbcch.smarttaskmanager.task.controller;
 
 import com.jbbcch.smarttaskmanager.task.api.TaskInternalAPI;
 import com.jbbcch.smarttaskmanager.task.api.external.SubtaskExternalAPI;
+import com.jbbcch.smarttaskmanager.task.dto.SubtaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskResponse;
 import com.jbbcch.smarttaskmanager.task.dto.TaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
@@ -19,12 +20,6 @@ public class TaskController {
 
     private final TaskInternalAPI taskInternalAPI;
     private final SubtaskExternalAPI subtaskExternalAPI;
-
-    @PostMapping
-    public ResponseEntity<TaskResponse> createTask(@RequestBody @Valid TaskRequest request) {
-        TaskResponse createdTask = taskInternalAPI.createTask(request);
-        return ResponseEntity.ok(createdTask);
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskResponse> updateTask(
@@ -45,5 +40,14 @@ public class TaskController {
     public ResponseEntity<List<SubtaskResponse>> getSubtasksByTaskId(@PathVariable Long id) {
         List<SubtaskResponse> subtaskResponseList = subtaskExternalAPI.getSubtasksByTaskId(id);
         return  ResponseEntity.ok(subtaskResponseList);
+    }
+
+    @PostMapping("/{id}/subtasks")
+    public ResponseEntity<SubtaskResponse> createSubtask(
+            @PathVariable Long id,
+            @RequestBody @Valid SubtaskRequest request
+    ) {
+        SubtaskResponse createdSubtask = subtaskExternalAPI.createSubtask(id, request);
+        return ResponseEntity.ok(createdSubtask);
     }
 }
