@@ -15,7 +15,7 @@ public class SubtaskResponse {
     Long id;
     String name;
     String description;
-    TaskStatus status;
+    Boolean done;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     UUID createdBy;

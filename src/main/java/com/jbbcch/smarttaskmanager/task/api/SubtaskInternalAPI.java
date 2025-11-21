@@ -9,4 +9,5 @@ public interface SubtaskInternalAPI {
     SubtaskResponse createSubtask(SubtaskRequest request);
     SubtaskResponse updateSubtaskById(Long id, SubtaskRequest request);
     SubtaskResponse deleteSubtaskById(Long id);
+    SubtaskResponse switchStatusById(Long subtaskId);
 }

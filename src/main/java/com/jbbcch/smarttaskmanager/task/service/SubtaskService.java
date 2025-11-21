@@ -25,6 +25,7 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
     public SubtaskResponse createSubtask(SubtaskRequest request) {
         Subtask subtask = subtaskMapper.subtaskRequestToSubtask(request);
         subtask.setCreatedBy(request.getActionBy());
+        subtask.setDone(false);
         subtaskRepository.save(subtask);
         return subtaskMapper.subtaskToSubtaskResponse(subtask);
     }
@@ -57,5 +58,14 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
         return subtaskList.stream()
                 .map(subtaskMapper::subtaskToSubtaskResponse)
                 .toList();
+    }
+
+    @Override
+    public SubtaskResponse switchStatusById(Long subtaskId) {
+        Subtask subtask = subtaskRepository.findById(subtaskId)
+                .orElseThrow(() -> new RuntimeException("Subtask not found"));
+        subtask.setDone(!subtask.getDone());
+        subtaskRepository.save(subtask);
+        return  subtaskMapper.subtaskToSubtaskResponse(subtask);
     }
 }

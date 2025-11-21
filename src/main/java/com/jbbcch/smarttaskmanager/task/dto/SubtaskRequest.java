@@ -16,7 +16,6 @@ public class SubtaskRequest {
     @NotBlank(message = "Subtask name may not be blank")
     String name;
     String description;
-    TaskStatus status;
     @NotNull
     Long taskId;
     UUID actionBy;
