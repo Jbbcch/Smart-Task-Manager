@@ -1,12 +1,12 @@
 package com.jbbcch.smarttaskmanager.security.role.mapper;
 
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleRequest;
-import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleResponse;
+import com.jbbcch.smarttaskmanager.security.role.dto.external.UserRoleResponse;
 import com.jbbcch.smarttaskmanager.security.role.model.entity.UserRole;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = { RoleMapper.class })
 public interface UserRoleMapper {
     UserRole userRoleRequestToUserRole(UserRoleRequest request);
     UserRoleResponse userRoleToUserRoleResponse(UserRole userRole);

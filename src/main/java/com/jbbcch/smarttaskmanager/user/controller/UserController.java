@@ -1,5 +1,7 @@
 package com.jbbcch.smarttaskmanager.user.controller;
 
+import com.jbbcch.smarttaskmanager.security.role.api.external.RoleAssignmentExternalAPI;
+import com.jbbcch.smarttaskmanager.security.role.dto.external.UserRoleResponse;
 import com.jbbcch.smarttaskmanager.user.api.UserInternalAPI;
 import com.jbbcch.smarttaskmanager.user.dto.UserRequest;
 import com.jbbcch.smarttaskmanager.user.dto.UserResponse;
@@ -8,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -16,6 +19,7 @@ import java.util.UUID;
 public class UserController {
 
     private final UserInternalAPI userInternalAPI;
+    private final RoleAssignmentExternalAPI roleAssignmentExternalAPI;
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest request) {
@@ -42,5 +46,11 @@ public class UserController {
     public ResponseEntity<UserResponse> softDeleteUserById(@PathVariable UUID id) {
         UserResponse deletedUser = userInternalAPI.deleteUserById(id);
         return ResponseEntity.ok(deletedUser);
+    }
+
+    @GetMapping("/{id}/roles")
+    public ResponseEntity<List<UserRoleResponse>> getUserRoles(@PathVariable UUID userId) {
+        List<UserRoleResponse> userRoles = roleAssignmentExternalAPI.getUserRolesByUserId(userId);
+        return ResponseEntity.ok(userRoles);
     }
 }

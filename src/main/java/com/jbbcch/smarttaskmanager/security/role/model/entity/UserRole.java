@@ -3,6 +3,8 @@ package com.jbbcch.smarttaskmanager.security.role.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -22,8 +24,10 @@ public class UserRole {
     @Column(nullable = false)
     UUID userId;
 
-    @Column(nullable = false)
-    Long roleId;
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    @Fetch(FetchMode.JOIN)
+    Role role;
 
     @Column(nullable = false)
     UUID assignedBy;

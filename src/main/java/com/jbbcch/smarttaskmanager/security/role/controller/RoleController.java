@@ -5,7 +5,7 @@ import com.jbbcch.smarttaskmanager.security.role.api.RoleInternalAPI;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleRequest;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleResponse;
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleRequest;
-import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleResponse;
+import com.jbbcch.smarttaskmanager.security.role.dto.external.UserRoleResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoleResponse> createRole(@PathVariable Long id) {
+    public ResponseEntity<RoleResponse> getRoleById(@PathVariable Long id) {
         RoleResponse role = roleInternalAPI.getRoleById(id);
         return ResponseEntity.ok(role);
     }

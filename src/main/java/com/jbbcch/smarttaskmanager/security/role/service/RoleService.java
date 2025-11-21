@@ -2,10 +2,11 @@ package com.jbbcch.smarttaskmanager.security.role.service;
 
 import com.jbbcch.smarttaskmanager.security.role.api.RoleAssignmentAPI;
 import com.jbbcch.smarttaskmanager.security.role.api.RoleInternalAPI;
+import com.jbbcch.smarttaskmanager.security.role.api.external.RoleAssignmentExternalAPI;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleRequest;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleResponse;
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleRequest;
-import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleResponse;
+import com.jbbcch.smarttaskmanager.security.role.dto.external.UserRoleResponse;
 import com.jbbcch.smarttaskmanager.security.role.mapper.RoleMapper;
 import com.jbbcch.smarttaskmanager.security.role.mapper.UserRoleMapper;
 import com.jbbcch.smarttaskmanager.security.role.model.entity.Role;
@@ -19,10 +20,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class RoleService implements RoleInternalAPI, RoleAssignmentAPI {
+public class RoleService implements RoleInternalAPI, RoleAssignmentAPI, RoleAssignmentExternalAPI {
 
     private final RoleMapper roleMapper;
     private final UserRoleMapper userRoleMapper;
@@ -111,5 +113,13 @@ public class RoleService implements RoleInternalAPI, RoleAssignmentAPI {
                 .orElseThrow(() -> new RuntimeException("User-Role relation not found"));
         userRoleRepository.deleteById(id);
         return userRoleMapper.userRoleToUserRoleResponse(removedUserRole);
+    }
+
+    @Override
+    public List<UserRoleResponse> getUserRolesByUserId(UUID userId) {
+        List<UserRole> userRoles = userRoleRepository.findUserRolesByUserId(userId);
+        return userRoles.stream()
+                .map(userRoleMapper::userRoleToUserRoleResponse)
+                .toList();
     }
 }
