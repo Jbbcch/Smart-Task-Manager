@@ -4,7 +4,7 @@ import com.jbbcch.smarttaskmanager.task.api.TaskInternalAPI;
 import com.jbbcch.smarttaskmanager.task.api.external.SubtaskExternalAPI;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskResponse;
-import com.jbbcch.smarttaskmanager.task.dto.TaskRequest;
+import com.jbbcch.smarttaskmanager.task.dto.external.TaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

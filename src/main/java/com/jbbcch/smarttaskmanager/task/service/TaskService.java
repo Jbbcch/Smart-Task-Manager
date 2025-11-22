@@ -2,13 +2,15 @@ package com.jbbcch.smarttaskmanager.task.service;
 
 import com.jbbcch.smarttaskmanager.task.api.TaskInternalAPI;
 import com.jbbcch.smarttaskmanager.task.api.external.TaskExternalAPI;
-import com.jbbcch.smarttaskmanager.task.dto.TaskRequest;
+import com.jbbcch.smarttaskmanager.task.dto.external.TaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
 import com.jbbcch.smarttaskmanager.task.mapper.TaskMapper;
 import com.jbbcch.smarttaskmanager.task.model.entity.Task;
 import com.jbbcch.smarttaskmanager.task.repository.TaskRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,10 +24,21 @@ public class TaskService implements TaskInternalAPI, TaskExternalAPI {
 
     @Override
     @Transactional
-    public TaskResponse createTask(TaskRequest request) {
+    public TaskResponse createTask(Long projectId, TaskRequest request) {
         Task task = taskMapper.taskRequestToTask(request);
         task.setCreatedBy(request.getActionBy());
-        taskRepository.save(task);
+        task.setProjectId(projectId);
+
+        try {
+            taskRepository.save(task);
+        } catch (DataIntegrityViolationException ex) {
+            if (ex.getCause() instanceof ConstraintViolationException cve &&
+                    "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
+                throw new RuntimeException("Project with id " + task.getProjectId() + " does not exist");
+            }
+            throw ex;
+        }
+
         return taskMapper.taskToTaskResponse(task);
     }
 

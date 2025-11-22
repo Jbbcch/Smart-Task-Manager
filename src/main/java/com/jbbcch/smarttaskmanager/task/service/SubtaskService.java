@@ -36,14 +36,13 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
 
         subtask.setCreatedBy(request.getActionBy());
         subtask.setDone(false);
-        subtaskRepository.save(subtask);
 
         try {
-            taskRepository.save(task);
+            subtaskRepository.save(subtask);
         } catch (DataIntegrityViolationException ex) {
             if (ex.getCause() instanceof ConstraintViolationException cve &&
                     "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
-                throw new RuntimeException("Project with id " + task.getProjectId() + " does not exist");
+                throw new RuntimeException("Task with id " + taskId + " does not exist");
             }
             throw ex;
         }

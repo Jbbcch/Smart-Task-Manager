@@ -1,4 +1,4 @@
-package com.jbbcch.smarttaskmanager.task.dto;
+package com.jbbcch.smarttaskmanager.task.dto.external;
 
 import com.jbbcch.smarttaskmanager.task.model.enums.TaskPriority;
 import com.jbbcch.smarttaskmanager.task.model.enums.TaskStatus;
@@ -19,9 +19,7 @@ public class TaskRequest {
     String description;
     TaskStatus status;
     TaskPriority priority;
-    LocalDateTime plannedStartDate;
     LocalDateTime plannedEndDate;
-    LocalDateTime actualStartDate;
     LocalDateTime actualEndDate;
     UUID actionBy;
 }
