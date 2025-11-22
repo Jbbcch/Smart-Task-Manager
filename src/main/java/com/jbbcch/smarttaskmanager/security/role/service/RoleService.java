@@ -17,6 +17,8 @@ import com.jbbcch.smarttaskmanager.security.shared.Authority;
 import com.jbbcch.smarttaskmanager.security.shared.AuthorityRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -101,8 +103,18 @@ public class RoleService implements RoleInternalAPI, RoleAssignmentAPI, RoleAssi
     @Transactional
     public UserRoleResponse assignRoleToUser(UserRoleRequest request) {
         UserRole assignedUserRole = userRoleMapper.userRoleRequestToUserRole(request);
-        userRoleRepository.save(assignedUserRole);
         assignedUserRole.setAssignedBy(request.getActionBy());
+
+        try {
+            userRoleRepository.save(assignedUserRole);
+        } catch (DataIntegrityViolationException ex) {
+            if (ex.getCause() instanceof ConstraintViolationException cve &&
+                    "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
+                throw new RuntimeException("Invalid role or user id");
+            }
+            throw ex;
+        }
+
         return userRoleMapper.userRoleToUserRoleResponse(assignedUserRole);
     }
 
