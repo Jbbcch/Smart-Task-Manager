@@ -6,7 +6,8 @@ import com.jbbcch.smarttaskmanager.security.role.api.external.RoleAssignmentExte
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleRequest;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleResponse;
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleRequest;
-import com.jbbcch.smarttaskmanager.security.role.dto.external.UserRoleResponse;
+import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleResponse;
+import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedRolesResponse;
 import com.jbbcch.smarttaskmanager.security.role.mapper.RoleMapper;
 import com.jbbcch.smarttaskmanager.security.role.mapper.UserRoleMapper;
 import com.jbbcch.smarttaskmanager.security.role.model.entity.Role;
@@ -128,10 +129,7 @@ public class RoleService implements RoleInternalAPI, RoleAssignmentAPI, RoleAssi
     }
 
     @Override
-    public List<UserRoleResponse> getUserRolesByUserId(UUID userId) {
-        List<UserRole> userRoles = userRoleRepository.findUserRolesByUserId(userId);
-        return userRoles.stream()
-                .map(userRoleMapper::userRoleToUserRoleResponse)
-                .toList();
+    public List<AssignedRolesResponse> getUserRolesByUserId(UUID userId) {
+        return userRoleRepository.findAssignedRolesByUserId(userId);
     }
 }

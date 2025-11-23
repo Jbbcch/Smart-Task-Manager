@@ -1,7 +1,7 @@
 package com.jbbcch.smarttaskmanager.user.controller;
 
 import com.jbbcch.smarttaskmanager.security.role.api.external.RoleAssignmentExternalAPI;
-import com.jbbcch.smarttaskmanager.security.role.dto.external.UserRoleResponse;
+import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedRolesResponse;
 import com.jbbcch.smarttaskmanager.user.api.UserInternalAPI;
 import com.jbbcch.smarttaskmanager.user.dto.UserRequest;
 import com.jbbcch.smarttaskmanager.user.dto.UserResponse;
@@ -49,8 +49,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}/roles")
-    public ResponseEntity<List<UserRoleResponse>> getUserRoles(@PathVariable UUID userId) {
-        List<UserRoleResponse> userRoles = roleAssignmentExternalAPI.getUserRolesByUserId(userId);
+    public ResponseEntity<List<AssignedRolesResponse>> getUserRoles(@PathVariable UUID userId) {
+        List<AssignedRolesResponse> userRoles = roleAssignmentExternalAPI.getUserRolesByUserId(userId);
         return ResponseEntity.ok(userRoles);
     }
 }

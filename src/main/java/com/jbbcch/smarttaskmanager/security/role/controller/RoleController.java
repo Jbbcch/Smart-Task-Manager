@@ -5,7 +5,7 @@ import com.jbbcch.smarttaskmanager.security.role.api.RoleInternalAPI;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleRequest;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleResponse;
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleRequest;
-import com.jbbcch.smarttaskmanager.security.role.dto.external.UserRoleResponse;
+import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +33,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<RoleResponse> updateUserById(
+    ResponseEntity<RoleResponse> updateRoleById(
             @PathVariable Long id,
             @RequestBody @Valid RoleRequest request
     ) {
@@ -42,7 +42,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<RoleResponse> deleteUserById(@PathVariable Long id) {
+    ResponseEntity<RoleResponse> deleteRoleById(@PathVariable Long id) {
         RoleResponse deletedUser = roleInternalAPI.deleteRoleById(id);
         return ResponseEntity.ok(deletedUser);
     }

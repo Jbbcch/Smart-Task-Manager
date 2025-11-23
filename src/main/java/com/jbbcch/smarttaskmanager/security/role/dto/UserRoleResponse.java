@@ -1,6 +1,5 @@
-package com.jbbcch.smarttaskmanager.security.role.dto.external;
+package com.jbbcch.smarttaskmanager.security.role.dto;
 
-import com.jbbcch.smarttaskmanager.security.role.dto.RoleResponse;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +16,7 @@ import java.util.UUID;
 public class UserRoleResponse {
     Long id;
     UUID userId;
-    RoleResponse role;
+    Long roleId;
     UUID assignedBy;
     LocalDateTime assignedAt;
 }

@@ -9,9 +9,11 @@ import java.util.UUID;
 
 @Repository
 public interface AuthorityRepository extends CrudRepository<Authority, Long> {
-    @Query("SELECT DISTINCT a FROM Authority a " +
-            "JOIN UserRole ur ON ur.roleId = a.roleId " +
-            "WHERE ur.userId = :userId")
+    @Query("""
+            SELECT DISTINCT a FROM Authority a
+            JOIN UserRole ur ON ur.roleId = a.roleId
+            WHERE ur.userId = :userId
+    """)
     List<Authority> findDistinctAuthoritiesByUserId(UUID userId);
 
     List<Authority> findAuthoritiesByRoleId(Long roleId);

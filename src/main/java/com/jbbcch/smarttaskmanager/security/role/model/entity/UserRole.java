@@ -24,10 +24,8 @@ public class UserRole {
     @Column(nullable = false)
     UUID userId;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    @Fetch(FetchMode.JOIN)
-    Role role;
+    @Column(nullable = false)
+    Long roleId;
 
     @Column(nullable = false)
     UUID assignedBy;
