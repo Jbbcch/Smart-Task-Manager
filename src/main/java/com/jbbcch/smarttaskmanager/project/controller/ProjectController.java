@@ -1,6 +1,9 @@
 package com.jbbcch.smarttaskmanager.project.controller;
 
+import com.jbbcch.smarttaskmanager.project.api.ProjectAssignmentAPI;
 import com.jbbcch.smarttaskmanager.project.api.ProjectInternalAPI;
+import com.jbbcch.smarttaskmanager.project.dto.AssignedProjectRequest;
+import com.jbbcch.smarttaskmanager.project.dto.AssignedProjectResponse;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectRequest;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectResponse;
 import com.jbbcch.smarttaskmanager.task.api.external.TaskExternalAPI;
@@ -19,6 +22,7 @@ import java.util.List;
 public class ProjectController {
     private final ProjectInternalAPI projectInternalAPI;
     private final TaskExternalAPI taskExternalAPI;
+    private final ProjectAssignmentAPI projectAssignmentAPI;
 
     @GetMapping("/{id}")
     ResponseEntity<ProjectResponse> getProjectById(@PathVariable Long id) {
@@ -60,5 +64,17 @@ public class ProjectController {
     ResponseEntity<ProjectResponse> deleteProjectById(@PathVariable Long id) {
         ProjectResponse deletedProject = projectInternalAPI.deleteProjectById(id);
         return ResponseEntity.ok(deletedProject);
+    }
+
+    @PostMapping("/assignment")
+    ResponseEntity<AssignedProjectResponse> assignProjectToDepartment(@RequestBody AssignedProjectRequest request) {
+        AssignedProjectResponse assignedProject = projectAssignmentAPI.assignProjectToDepartment(request);
+        return ResponseEntity.ok(assignedProject);
+    }
+
+    @DeleteMapping("/assignment/{id}")
+    ResponseEntity<AssignedProjectResponse> removeProjectFromDepartmentById(@PathVariable Long id) {
+        AssignedProjectResponse assignedProject = projectAssignmentAPI.removeProjectFromDepartmentById(id);
+        return ResponseEntity.ok(assignedProject);
     }
 }
