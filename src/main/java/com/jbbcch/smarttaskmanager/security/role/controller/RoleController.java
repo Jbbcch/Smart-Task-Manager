@@ -47,13 +47,13 @@ public class RoleController {
         return ResponseEntity.ok(deletedUser);
     }
 
-    @PostMapping("/users")
+    @PostMapping("/assignment")
     public ResponseEntity<UserRoleResponse> assignRoleToUser(@RequestBody UserRoleRequest userRoleRequest) {
         UserRoleResponse response = roleAssignmentAPI.assignRoleToUser(userRoleRequest);
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/assignment/{id}")
     public ResponseEntity<UserRoleResponse> removeRoleFromUser(@PathVariable Long id) {
         UserRoleResponse response = roleAssignmentAPI.removeRoleFromUserById(id);
         return ResponseEntity.ok(response);
