@@ -87,7 +87,7 @@ public class ProjectService implements ProjectInternalAPI, ProjectAssignmentAPI 
     @Transactional
     public AssignedProjectResponse removeProjectFromDepartmentById(Long id) {
         AssignedProject removedProject = assignedProjectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User-Role relation not found"));
+                .orElseThrow(() -> new RuntimeException("Project-Department relation not found"));
         assignedProjectRepository.deleteById(id);
         return assignedProjectMapper.assignedProjectToResponse(removedProject);
     }

@@ -74,7 +74,7 @@ public class ProjectController {
 
     @DeleteMapping("/assignment/{id}")
     ResponseEntity<AssignedProjectResponse> removeProjectFromDepartmentById(@PathVariable Long id) {
-        AssignedProjectResponse assignedProject = projectAssignmentAPI.removeProjectFromDepartmentById(id);
-        return ResponseEntity.ok(assignedProject);
+        AssignedProjectResponse removedProject = projectAssignmentAPI.removeProjectFromDepartmentById(id);
+        return ResponseEntity.ok(removedProject);
     }
 }
