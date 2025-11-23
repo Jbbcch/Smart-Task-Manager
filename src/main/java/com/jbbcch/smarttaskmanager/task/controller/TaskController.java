@@ -1,7 +1,10 @@
 package com.jbbcch.smarttaskmanager.task.controller;
 
+import com.jbbcch.smarttaskmanager.task.api.TaskAssignmentAPI;
 import com.jbbcch.smarttaskmanager.task.api.TaskInternalAPI;
 import com.jbbcch.smarttaskmanager.task.api.external.SubtaskExternalAPI;
+import com.jbbcch.smarttaskmanager.task.dto.AssignedTaskRequest;
+import com.jbbcch.smarttaskmanager.task.dto.AssignedTaskResponse;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskResponse;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskRequest;
@@ -20,6 +23,7 @@ public class TaskController {
 
     private final TaskInternalAPI taskInternalAPI;
     private final SubtaskExternalAPI subtaskExternalAPI;
+    private final TaskAssignmentAPI taskAssignmentAPI;
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskResponse> updateTask(
@@ -49,5 +53,17 @@ public class TaskController {
     ) {
         SubtaskResponse createdSubtask = subtaskExternalAPI.createSubtask(id, request);
         return ResponseEntity.ok(createdSubtask);
+    }
+
+    @PostMapping("/assignment")
+    ResponseEntity<AssignedTaskResponse> assignProjectToDepartment(@RequestBody AssignedTaskRequest request) {
+        AssignedTaskResponse assignedTask = taskAssignmentAPI.assignTaskToUser(request);
+        return ResponseEntity.ok(assignedTask);
+    }
+
+    @DeleteMapping("/assignment/{id}")
+    ResponseEntity<AssignedTaskResponse> removeProjectFromDepartmentById(@PathVariable Long id) {
+        AssignedTaskResponse removedTask = taskAssignmentAPI.removeTaskFromUserById(id);
+        return ResponseEntity.ok(removedTask);
     }
 }
