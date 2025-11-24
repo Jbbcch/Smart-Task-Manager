@@ -19,7 +19,7 @@ public class Authority {
 
     Long roleId;
 
-    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     String permission;
 
     @Enumerated(EnumType.STRING)

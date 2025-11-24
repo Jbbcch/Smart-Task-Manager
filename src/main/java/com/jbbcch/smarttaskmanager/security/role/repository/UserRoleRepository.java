@@ -13,7 +13,8 @@ import java.util.UUID;
 public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
 
     @Query("""
-        SELECT new AssignedRolesResponse(r.id, r.name, r.description, ur.assignedAt, ur.assignedBy)
+        SELECT new com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedRolesResponse
+        (r.id, r.name, r.description, ur.assignedAt, ur.assignedBy)
         FROM UserRole ur
         JOIN Role r ON ur.roleId = r.id
         WHERE ur.userId = :userId

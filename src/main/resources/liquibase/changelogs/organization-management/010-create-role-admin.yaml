@@ -5,8 +5,9 @@ databaseChangeLog:
       preConditions:
         - onFail: MARK_RAN
         - not:
-            rowExists:
-              - where: id = 0
+          - sqlCheck:
+              expectedResult: 1
+              sql: SELECT COUNT(*) FROM organization_management.roles WHERE id = 0
       changes:
         - insert:
             tableName: roles
@@ -57,5 +58,5 @@ databaseChangeLog:
               (0, 'DELETE_ROLE', 'GLOBAL', NULL),
               (0, 'DELETE_PROJECT', 'GLOBAL', NULL),
               (0, 'DELETE_TASK', 'GLOBAL', NULL),
-              (0, 'DELETE_SUBTASK', 'GLOBAL', NULL),
+              (0, 'DELETE_SUBTASK', 'GLOBAL', NULL)
 
