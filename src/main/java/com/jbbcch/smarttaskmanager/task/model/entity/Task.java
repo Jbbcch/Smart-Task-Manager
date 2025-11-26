@@ -47,12 +47,10 @@ public class Task {
 
     LocalDateTime actualEndDate;
 
-    @Column(nullable = false, updatable = false)
     LocalDateTime createdAt;
 
     LocalDateTime updatedAt;
 
-    @Column(nullable = false, updatable = false)
     UUID createdBy;
 
     UUID updatedBy;

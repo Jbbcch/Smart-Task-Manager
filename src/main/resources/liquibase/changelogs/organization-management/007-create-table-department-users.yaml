@@ -33,10 +33,6 @@ databaseChangeLog:
               - column:
                   name: assigned_at
                   type: TIMESTAMP
-                  constraints:
-                    nullable: false
               - column:
                   name: assigned_by
                   type: UUID
-                  constraints:
-                    nullable: false

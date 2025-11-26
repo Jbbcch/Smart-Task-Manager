@@ -31,16 +31,12 @@ databaseChangeLog:
               - column:
                   name: created_at
                   type: TIMESTAMP
-                  constraints:
-                    nullable: false
               - column:
                   name: updated_at
                   type: TIMESTAMP
               - column:
                   name: created_by
                   type: UUID
-                  constraints:
-                    nullable: false
               - column:
                   name: updated_by
                   type: UUID

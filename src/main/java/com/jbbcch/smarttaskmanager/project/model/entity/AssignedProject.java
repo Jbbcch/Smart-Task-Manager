@@ -25,10 +25,8 @@ public class AssignedProject {
     @Column(nullable = false)
     Long departmentId;
 
-    @Column(nullable = false)
     UUID assignedBy;
 
-    @Column(nullable = false)
     LocalDateTime assignedAt;
 
     @PrePersist

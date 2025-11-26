@@ -25,10 +25,8 @@ public class AssignedTask {
     @Column(nullable = false)
     UUID userId;
 
-    @Column(nullable = false)
     UUID assignedBy;
 
-    @Column(nullable = false)
     LocalDateTime assignedAt;
 
     @PrePersist

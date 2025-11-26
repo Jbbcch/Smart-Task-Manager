@@ -31,12 +31,10 @@ public class Subtask {
     @JoinColumn(name = "task_id", nullable = false)
     Task task;
 
-    @Column(nullable = false, updatable = false)
     LocalDateTime createdAt;
 
     LocalDateTime updatedAt;
 
-    @Column(nullable = false, updatable = false)
     UUID createdBy;
 
     UUID updatedBy;

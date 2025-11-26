@@ -27,10 +27,8 @@ public class UserRole {
     @Column(nullable = false)
     Long roleId;
 
-    @Column(nullable = false)
     UUID assignedBy;
 
-    @Column(nullable = false)
     LocalDateTime assignedAt;
 
     @PrePersist

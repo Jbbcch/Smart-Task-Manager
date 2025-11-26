@@ -25,12 +25,10 @@ public class Department {
     @Lob
     String description;
 
-    @Column(nullable = false, updatable = false)
     LocalDateTime createdAt;
 
     LocalDateTime updatedAt;
 
-    @Column(nullable = false, updatable = false)
     UUID createdBy;
 
     UUID updatedBy;

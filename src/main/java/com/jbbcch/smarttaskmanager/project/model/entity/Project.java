@@ -29,12 +29,10 @@ public class Project {
     @Enumerated(EnumType.STRING)
     ProjectStatus status;
 
-    @Column(nullable = false, updatable = false)
     LocalDateTime createdAt;
 
     LocalDateTime updatedAt;
 
-    @Column(nullable = false, updatable = false)
     UUID createdBy;
 
     UUID updatedBy;
