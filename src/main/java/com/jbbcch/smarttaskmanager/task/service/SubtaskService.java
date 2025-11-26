@@ -72,6 +72,7 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
     }
 
     @Override
+    @Transactional
     public List<SubtaskResponse> getSubtasksByTaskId(Long taskId) {
         List<Subtask> subtaskList = subtaskRepository.findByTaskId(taskId);
 
@@ -81,6 +82,7 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
     }
 
     @Override
+    @Transactional
     public SubtaskResponse switchStatusById(Long subtaskId) {
         Subtask subtask = subtaskRepository.findById(subtaskId)
                 .orElseThrow(() -> new RuntimeException("Subtask not found"));

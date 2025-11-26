@@ -75,6 +75,7 @@ public class RoleService implements RoleInternalAPI, RoleAssignmentAPI, RoleAssi
     }
 
     @Override
+    @Transactional
     public RoleResponse getRoleById(Long id) {
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role not found"));

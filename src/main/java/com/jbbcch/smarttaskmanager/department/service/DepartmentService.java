@@ -48,6 +48,7 @@ public class DepartmentService implements DepartmentInternalAPI {
     }
 
     @Override
+    @Transactional
     public DepartmentResponse getDepartmentById(Long id) {
         Department department = departmentRepository.findById(id)
                 .orElseThrow( () -> new RuntimeException("Department not found"));

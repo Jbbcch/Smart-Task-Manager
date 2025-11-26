@@ -72,6 +72,7 @@ public class TaskService implements TaskInternalAPI, TaskExternalAPI, TaskAssign
     }
 
     @Override
+    @Transactional
     public List<TaskResponse> getTasksByProjectId(Long projectId) {
         List<Task> taskList = taskRepository.findByProjectId(projectId);
 

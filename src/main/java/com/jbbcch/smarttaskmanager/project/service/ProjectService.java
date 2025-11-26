@@ -37,6 +37,7 @@ public class ProjectService implements ProjectInternalAPI, ProjectAssignmentAPI 
     }
 
     @Override
+    @Transactional
     public ProjectResponse getProjectById(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
