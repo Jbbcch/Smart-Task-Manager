@@ -15,6 +15,15 @@ public class SubtaskController {
 
     private final SubtaskInternalAPI subtaskInternalAPI;
 
+    @PostMapping
+    public ResponseEntity<SubtaskResponse> createSubtask(
+            @RequestParam Long id,
+            @RequestBody @Valid SubtaskRequest request
+    ) {
+        SubtaskResponse createdSubtask = subtaskInternalAPI.createSubtask(id, request);
+        return ResponseEntity.ok(createdSubtask);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<SubtaskResponse> updateSubtask(
             @PathVariable Long id,

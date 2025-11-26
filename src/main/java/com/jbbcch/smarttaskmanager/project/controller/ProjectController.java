@@ -7,7 +7,6 @@ import com.jbbcch.smarttaskmanager.project.dto.AssignedProjectResponse;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectRequest;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectResponse;
 import com.jbbcch.smarttaskmanager.task.api.external.TaskExternalAPI;
-import com.jbbcch.smarttaskmanager.task.dto.external.TaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,15 +33,6 @@ public class ProjectController {
     ResponseEntity<List<TaskResponse>> getProjectTasks(@PathVariable Long id) {
         List<TaskResponse> projectTasks = taskExternalAPI.getTasksByProjectId(id);
         return ResponseEntity.ok(projectTasks);
-    }
-
-    @PostMapping("/{id}/tasks")
-    ResponseEntity<TaskResponse> createTask(
-            @PathVariable Long projectId,
-            @RequestBody @Valid TaskRequest request
-    ) {
-        TaskResponse createdTask = taskExternalAPI.createTask(projectId, request);
-        return  ResponseEntity.ok(createdTask);
     }
 
     @PostMapping

@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface TaskExternalAPI {
     List<TaskResponse> getTasksByProjectId(Long projectId);
-    TaskResponse createTask(Long projectId, TaskRequest request);
 }
