@@ -15,6 +15,7 @@ import org.hibernate.annotations.FetchMode;
 @Setter
 public class Authority {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     Long roleId;

@@ -53,10 +53,9 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
     @Override
     @Transactional
     public SubtaskResponse updateSubtaskById(Long id, SubtaskRequest request) {
-        subtaskRepository.findById(id)
+        Subtask subtask = subtaskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Subtask not found"));
-        Subtask subtask = subtaskMapper.subtaskRequestToSubtask(request);
-        subtask.setId(id);
+        subtaskMapper.updateSubtaskFromRequest(request, subtask);
         subtask.setUpdatedBy(request.getActionBy());
         subtaskRepository.save(subtask);
         return subtaskMapper.subtaskToSubtaskResponse(subtask);

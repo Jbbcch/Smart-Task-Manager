@@ -47,10 +47,9 @@ public class ProjectService implements ProjectInternalAPI, ProjectAssignmentAPI 
     @Override
     @Transactional
     public ProjectResponse updateProjectById(Long id, ProjectRequest request) {
-        projectRepository.findById(id)
+        Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
-        Project project = projectMapper.projectRequestToProject(request);
-        project.setId(id);
+        projectMapper.updateProjectFromRequest(request, project);
         project.setUpdatedBy(request.getActionBy());
         projectRepository.save(project);
         return projectMapper.projectToProjectResponse(project);

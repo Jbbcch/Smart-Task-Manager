@@ -58,20 +58,26 @@ public class RoleService implements RoleInternalAPI, RoleAssignmentAPI, RoleAssi
     @Override
     @Transactional
     public RoleResponse updateRoleById(Long id, RoleRequest roleRequest) {
-        roleRepository.findById(id)
+        Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
-        Role updatedRole = roleMapper.roleRequestToRole(roleRequest);
-        updatedRole.setId(id);
-        updatedRole.setUpdatedBy(roleRequest.getActionBy());
-        roleRepository.save(updatedRole);
+        roleMapper.updateRoleFromRequest(roleRequest, role);
+        role.setUpdatedBy(roleRequest.getActionBy());
+        roleRepository.save(role);
 
-        List<Authority> authorities = roleRequest.getAuthorities().stream()
-                .map(Authority::fromString).toList();
-        authorities.forEach(authority -> authority.setRoleId(id));
-        authorityRepository.saveAll(authorities);
+        if (roleRequest.getAuthorities() != null) {
+            // there probably is a better way of doing this
+            authorityRepository.deleteByRoleId(id);
+            List<Authority> authorities = roleRequest.getAuthorities().stream()
+                    .map(Authority::fromString).toList();
+            authorities.forEach(authority -> authority.setRoleId(id));
+            authorityRepository.saveAll(authorities);
+        }
 
-        return roleMapper.roleToRoleResponse(updatedRole);
+        RoleResponse roleResponse = roleMapper.roleToRoleResponse(role);
+        roleResponse.setAuthorities(roleRequest.getAuthorities());
+
+        return roleResponse;
     }
 
     @Override

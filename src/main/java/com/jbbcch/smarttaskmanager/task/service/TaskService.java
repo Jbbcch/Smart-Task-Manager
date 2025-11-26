@@ -53,10 +53,9 @@ public class TaskService implements TaskInternalAPI, TaskExternalAPI, TaskAssign
     @Override
     @Transactional
     public TaskResponse updateTaskById(Long id, TaskRequest request) {
-        taskRepository.findById(id)
+        Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
-        Task task = taskMapper.taskRequestToTask(request);
-        task.setId(id);
+        taskMapper.updateTaskFromRequest(request, task);
         task.setUpdatedBy(request.getActionBy());
         taskRepository.save(task);
         return taskMapper.taskToTaskResponse(task);

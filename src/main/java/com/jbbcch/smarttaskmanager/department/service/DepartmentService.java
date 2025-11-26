@@ -29,10 +29,9 @@ public class DepartmentService implements DepartmentInternalAPI {
     @Override
     @Transactional
     public DepartmentResponse updateDepartmentById(Long id, DepartmentRequest request) {
-        departmentRepository.findById(id)
+        Department department = departmentRepository.findById(id)
                 .orElseThrow( () -> new RuntimeException("Department not found"));
-        Department department = departmentMapper.departmentRequestToDepartment(request);
-        department.setId(id);
+        departmentMapper.updateDepartmentFromRequest(request, department);
         department.setUpdatedBy(request.getActionBy());
         departmentRepository.save(department);
         return departmentMapper.departmentToDepartmentResponse(department);
