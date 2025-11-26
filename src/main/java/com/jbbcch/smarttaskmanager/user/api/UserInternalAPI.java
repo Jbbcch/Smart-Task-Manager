@@ -10,4 +10,5 @@ public interface UserInternalAPI {
     UserResponse getUserById(UUID id);
     UserResponse updateUserById(UUID id, UserRequest request);
     UserResponse deleteUserById(UUID id);
+    UserResponse getCurrentUser();
 }

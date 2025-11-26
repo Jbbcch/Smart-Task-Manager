@@ -33,6 +33,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getCurrentUser() {
+        UserResponse user = userInternalAPI.getCurrentUser();
+        return ResponseEntity.ok(user);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUserById(
             @PathVariable UUID id,

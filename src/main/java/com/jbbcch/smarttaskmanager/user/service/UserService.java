@@ -1,5 +1,6 @@
 package com.jbbcch.smarttaskmanager.user.service;
 
+import com.jbbcch.smarttaskmanager.security.core.api.external.SecurityExternalAPI;
 import com.jbbcch.smarttaskmanager.user.api.UserInternalAPI;
 import com.jbbcch.smarttaskmanager.user.dto.UserRequest;
 import com.jbbcch.smarttaskmanager.user.dto.UserResponse;
@@ -20,6 +21,7 @@ public class UserService implements UserInternalAPI {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final SecurityExternalAPI securityExternalAPI;
 
     @Override
     @Transactional
@@ -41,14 +43,15 @@ public class UserService implements UserInternalAPI {
     @Override
     @Transactional
     public UserResponse updateUserById(UUID id, UserRequest request) {
-        userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        User updatedUser = userMapper.userRequestToUser(request);
-        updatedUser.setId(id);
-        updatedUser.setPassword(passwordEncoder.encode(request.getPassword()));
-        updatedUser.setUpdatedBy(request.getActionBy());
-        userRepository.save(updatedUser);
-        return userMapper.userToUserResponse(updatedUser);
+        userMapper.updateUserFromRequest(request, user);
+        user.setUpdatedBy(request.getActionBy());
+        if (request.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+        userRepository.save(user);
+        return userMapper.userToUserResponse(user);
     }
 
     @Override
@@ -59,5 +62,14 @@ public class UserService implements UserInternalAPI {
         deletedUser.setIsDeleted(true);
         userRepository.save(deletedUser);
         return userMapper.userToUserResponse(deletedUser);
+    }
+
+    @Override
+    public UserResponse getCurrentUser() {
+        UUID currentUserId = securityExternalAPI.getCurrentUserId();
+        if (currentUserId != null) {
+            return getUserById(currentUserId);
+        }
+        return null;
     }
 }
