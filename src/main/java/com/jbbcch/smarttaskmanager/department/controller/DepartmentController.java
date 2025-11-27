@@ -3,10 +3,14 @@ package com.jbbcch.smarttaskmanager.department.controller;
 import com.jbbcch.smarttaskmanager.department.api.DepartmentInternalAPI;
 import com.jbbcch.smarttaskmanager.department.dto.DepartmentRequest;
 import com.jbbcch.smarttaskmanager.department.dto.DepartmentResponse;
+import com.jbbcch.smarttaskmanager.project.api.external.ProjectAssignmentExternalAPI;
+import com.jbbcch.smarttaskmanager.project.dto.external.AssignedProjectResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/departments")
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class DepartmentController {
 
     private final DepartmentInternalAPI departmentInternalAPI;
+    private final ProjectAssignmentExternalAPI projectAssignmentExternalAPI;
 
     @GetMapping("/{id}")
     public ResponseEntity<DepartmentResponse> getDepartmentById(@PathVariable Long id) {
@@ -40,5 +45,11 @@ public class DepartmentController {
     public ResponseEntity<DepartmentResponse> deleteDepartmentById(@PathVariable Long id) {
         DepartmentResponse deletedDepartment = departmentInternalAPI.deleteDepartmentById(id);
         return ResponseEntity.ok(deletedDepartment);
+    }
+
+    @GetMapping("{id}/projects")
+    public ResponseEntity<List<AssignedProjectResponse>> getDepartmentProjects(@PathVariable Long departmentId) {
+        List<AssignedProjectResponse> assignedProjects = projectAssignmentExternalAPI.getProjectsByDepartmentId(departmentId);
+        return ResponseEntity.ok(assignedProjects);
     }
 }

@@ -1,8 +1,10 @@
 package com.jbbcch.smarttaskmanager.project.service;
 
 import com.jbbcch.smarttaskmanager.project.api.ProjectAssignmentAPI;
-import com.jbbcch.smarttaskmanager.project.dto.AssignedProjectRequest;
-import com.jbbcch.smarttaskmanager.project.dto.AssignedProjectResponse;
+import com.jbbcch.smarttaskmanager.project.api.external.ProjectAssignmentExternalAPI;
+import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentRequest;
+import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentResponse;
+import com.jbbcch.smarttaskmanager.project.dto.external.AssignedProjectResponse;
 import com.jbbcch.smarttaskmanager.project.mapper.AssignedProjectMapper;
 import com.jbbcch.smarttaskmanager.project.model.entity.AssignedProject;
 import com.jbbcch.smarttaskmanager.project.repository.AssignedProjectRepository;
@@ -12,16 +14,18 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class ProjectAssignmentService implements ProjectAssignmentAPI {
+public class ProjectAssignmentService implements ProjectAssignmentAPI, ProjectAssignmentExternalAPI {
 
     private final AssignedProjectRepository assignedProjectRepository;
     private final AssignedProjectMapper assignedProjectMapper;
 
     @Override
     @Transactional
-    public AssignedProjectResponse assignProjectToDepartment(AssignedProjectRequest request) {
+    public ProjectDepartmentResponse assignProjectToDepartment(ProjectDepartmentRequest request) {
         AssignedProject assignedProject = assignedProjectMapper.requestToAssignedProject(request);
         assignedProject.setAssignedBy(request.getActionBy());
 
@@ -40,10 +44,15 @@ public class ProjectAssignmentService implements ProjectAssignmentAPI {
 
     @Override
     @Transactional
-    public AssignedProjectResponse removeProjectFromDepartmentById(Long id) {
+    public ProjectDepartmentResponse removeProjectFromDepartmentById(Long id) {
         AssignedProject removedProject = assignedProjectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project-Department relation not found"));
         assignedProjectRepository.deleteById(id);
         return assignedProjectMapper.assignedProjectToResponse(removedProject);
+    }
+
+    @Override
+    public List<AssignedProjectResponse> getProjectsByDepartmentId(Long departmentId) {
+        return assignedProjectRepository.getProjectsByDepartmentId(departmentId);
     }
 }

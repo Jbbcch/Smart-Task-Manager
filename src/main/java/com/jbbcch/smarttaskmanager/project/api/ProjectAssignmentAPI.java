@@ -1,9 +1,9 @@
 package com.jbbcch.smarttaskmanager.project.api;
 
-import com.jbbcch.smarttaskmanager.project.dto.AssignedProjectRequest;
-import com.jbbcch.smarttaskmanager.project.dto.AssignedProjectResponse;
+import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentRequest;
+import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentResponse;
 
 public interface ProjectAssignmentAPI {
-    AssignedProjectResponse assignProjectToDepartment(AssignedProjectRequest request);
-    AssignedProjectResponse removeProjectFromDepartmentById(Long departmentId);
+    ProjectDepartmentResponse assignProjectToDepartment(ProjectDepartmentRequest request);
+    ProjectDepartmentResponse removeProjectFromDepartmentById(Long departmentId);
 }

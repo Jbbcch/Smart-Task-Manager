@@ -14,6 +14,7 @@ import java.util.UUID;
 public class ProjectResponse {
     Long id;
     String name;
+    String description;
     ProjectStatus status;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
