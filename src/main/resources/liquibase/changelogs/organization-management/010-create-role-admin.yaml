@@ -55,6 +55,7 @@ databaseChangeLog:
               (0, 'DELETE_ROLE'),
               (0, 'DELETE_PROJECT'),
               (0, 'DELETE_TASK'),
-              (0, 'ASSIGN_TASK'),
-              (0, 'ASSIGN_PROJECT'),
-              (0, 'ASSIGN_ROLE')
+              (0, 'ASSIGN_TASK_USER'),
+              (0, 'ASSIGN_PROJECT_DEPARTMENT'),
+              (0, 'ASSIGN_ROLE_USER'),
+              (0, 'ASSIGN_USER_DEPARTMENT')
