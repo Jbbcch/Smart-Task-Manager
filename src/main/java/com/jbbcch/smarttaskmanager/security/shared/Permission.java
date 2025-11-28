@@ -1,38 +1,31 @@
 package com.jbbcch.smarttaskmanager.security.shared;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+public enum Permission {
+    CREATE_TASK,
+    UPDATE_TASK,
+    DELETE_TASK,
+    READ_TASK,
+    ASSIGN_TASK,
 
-@Getter
-@Setter
-@RequiredArgsConstructor
-public class Permission {
+    CREATE_PROJECT,
+    UPDATE_PROJECT,
+    READ_PROJECT,
+    DELETE_PROJECT,
+    ASSIGN_PROJECT,
 
-    public enum Action {
-        CREATE, READ, UPDATE, DELETE
-    }
+    CREATE_ROLE,
+    UPDATE_ROLE,
+    READ_ROLE,
+    DELETE_ROLE,
+    ASSIGN_ROLE,
 
-    public enum Resource {
-        DEPARTMENT, USER, ROLE, PROJECT, TASK, SUBTASK
-    }
+    CREATE_DEPARTMENT,
+    UPDATE_DEPARTMENT,
+    READ_DEPARTMENT,
+    DELETE_DEPARTMENT,
 
-    private final Action action;
-    private final Resource resource;
-
-    @Override
-    public String toString() {
-        return action.name() + "_" + resource.name();
-    }
-
-    public static Permission fromString(String permissionString) {
-        try {
-            String[] parts = permissionString.split("_");
-            Action action = Action.valueOf(parts[0]);
-            Resource resource = Resource.valueOf(parts[1]);
-            return new Permission(action, resource);
-        } catch (Exception e) {
-            throw new RuntimeException("Invalid permission string");
-        }
-    }
+    CREATE_USER,
+    UPDATE_USER,
+    READ_USER,
+    DELETE_USER,
 }

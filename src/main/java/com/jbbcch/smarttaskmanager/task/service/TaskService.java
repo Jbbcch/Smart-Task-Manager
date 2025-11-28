@@ -6,6 +6,7 @@ import com.jbbcch.smarttaskmanager.task.dto.external.TaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
 import com.jbbcch.smarttaskmanager.task.mapper.TaskMapper;
 import com.jbbcch.smarttaskmanager.task.model.entity.Task;
+import com.jbbcch.smarttaskmanager.task.model.enums.TaskStatus;
 import com.jbbcch.smarttaskmanager.task.repository.TaskRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,24 @@ public class TaskService implements TaskInternalAPI, TaskExternalAPI {
             throw ex;
         }
 
+        return taskMapper.taskToTaskResponse(task);
+    }
+
+    @Override
+    @Transactional
+    public TaskResponse getTaskById(Long id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        return taskMapper.taskToTaskResponse(task);
+    }
+
+    @Override
+    @Transactional
+    public TaskResponse changeTaskStatus(Long id, TaskStatus taskStatus) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setStatus(taskStatus);
+        taskRepository.save(task);
         return taskMapper.taskToTaskResponse(task);
     }
 

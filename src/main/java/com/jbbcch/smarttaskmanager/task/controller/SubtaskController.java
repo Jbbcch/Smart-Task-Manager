@@ -6,6 +6,7 @@ import com.jbbcch.smarttaskmanager.task.dto.SubtaskResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +16,7 @@ public class SubtaskController {
 
     private final SubtaskInternalAPI subtaskInternalAPI;
 
+    @PreAuthorize("hasAuthority('CREATE_TASK')")
     @PostMapping
     public ResponseEntity<SubtaskResponse> createSubtask(
             @RequestParam Long id,
@@ -24,6 +26,7 @@ public class SubtaskController {
         return ResponseEntity.ok(createdSubtask);
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_TASK')")
     @PutMapping("/{id}")
     public ResponseEntity<SubtaskResponse> updateSubtask(
             @PathVariable Long id,
@@ -33,12 +36,14 @@ public class SubtaskController {
         return ResponseEntity.ok(updatedSubtask);
     }
 
+    @PreAuthorize("hasAuthority('READ_TASK')")
     @PatchMapping("/{id}")
     public ResponseEntity<SubtaskResponse> setSubtaskStatus(@PathVariable Long id) {
         SubtaskResponse subtaskResponse = subtaskInternalAPI.switchStatusById(id);
         return ResponseEntity.ok(subtaskResponse);
     }
 
+    @PreAuthorize("hasAuthority('DELETE_TASK')")
     @DeleteMapping("/{id}")
     public ResponseEntity<SubtaskResponse> deleteSubtask(@PathVariable Long id) {
         SubtaskResponse deletedSubtask = subtaskInternalAPI.deleteSubtaskById(id);

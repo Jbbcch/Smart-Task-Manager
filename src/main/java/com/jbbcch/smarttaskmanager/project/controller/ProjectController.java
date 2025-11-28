@@ -8,6 +8,7 @@ import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,24 +21,28 @@ public class ProjectController {
     private final TaskExternalAPI taskExternalAPI;
     private final ProjectAssignmentAPI projectAssignmentAPI;
 
+    @PreAuthorize("hasAuthority('READ_PROJECT')")
     @GetMapping("/{id}")
     ResponseEntity<ProjectResponse> getProjectById(@PathVariable Long id) {
         ProjectResponse project = projectInternalAPI.getProjectById(id);
         return ResponseEntity.ok(project);
     }
 
+    @PreAuthorize("hasAuthority('READ_TASK')")
     @GetMapping("/{id}/tasks")
     ResponseEntity<List<TaskResponse>> getProjectTasks(@PathVariable Long id) {
         List<TaskResponse> projectTasks = taskExternalAPI.getTasksByProjectId(id);
         return ResponseEntity.ok(projectTasks);
     }
 
+    @PreAuthorize("hasAuthority('CREATE_PROJECT')")
     @PostMapping
     ResponseEntity<ProjectResponse> createProject(@RequestBody @Valid ProjectRequest request) {
         ProjectResponse createdProject = projectInternalAPI.createProject(request);
         return ResponseEntity.ok(createdProject);
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_PROJECT')")
     @PutMapping("/{id}")
     ResponseEntity<ProjectResponse> updateProjectById(
             @PathVariable Long id,
@@ -47,24 +52,28 @@ public class ProjectController {
         return ResponseEntity.ok(updatedProject);
     }
 
+    @PreAuthorize("hasAuthority('DELETE_PROJECT')")
     @DeleteMapping("/{id}")
     ResponseEntity<ProjectResponse> deleteProjectById(@PathVariable Long id) {
         ProjectResponse deletedProject = projectInternalAPI.deleteProjectById(id);
         return ResponseEntity.ok(deletedProject);
     }
 
+    @PreAuthorize("hasAuthority('ASSIGN_PROJECT')")
     @PostMapping("/assignment")
     ResponseEntity<ProjectDepartmentResponse> assignProjectToDepartment(@RequestBody ProjectDepartmentRequest request) {
         ProjectDepartmentResponse assignedProject = projectAssignmentAPI.assignProjectToDepartment(request);
         return ResponseEntity.ok(assignedProject);
     }
 
+    @PreAuthorize("hasAuthority('ASSIGN_PROJECT')")
     @DeleteMapping("/assignment/{id}")
     ResponseEntity<ProjectDepartmentResponse> removeProjectFromDepartmentById(@PathVariable Long id) {
         ProjectDepartmentResponse removedProject = projectAssignmentAPI.removeProjectFromDepartmentById(id);
         return ResponseEntity.ok(removedProject);
     }
 
+    @PreAuthorize("hasAuthority('READ_DEPARTMENT')")
     @GetMapping("/{id}/departments")
     ResponseEntity<List<AssignedDepartmentResponse>> getDepartmentsByProjectId(@PathVariable Long projectId) {
         List<AssignedDepartmentResponse> departmentResponses = projectAssignmentAPI.getDepartmentsByProjectId(projectId);

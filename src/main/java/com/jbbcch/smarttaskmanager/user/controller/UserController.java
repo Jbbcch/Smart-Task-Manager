@@ -10,6 +10,7 @@ import com.jbbcch.smarttaskmanager.user.dto.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,12 +25,14 @@ public class UserController {
     private final RoleAssignmentExternalAPI roleAssignmentExternalAPI;
     private final TaskAssignmentExternalAPI taskAssignmentExternalAPI;
 
+    @PreAuthorize("hasAuthority('CREATE_USER')")
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest request) {
         UserResponse createdUser = userInternalAPI.createUser(request);
         return ResponseEntity.ok(createdUser);
     }
 
+    @PreAuthorize("hasAuthority('READ_USER')")
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
         UserResponse user = userInternalAPI.getUserById(id);
@@ -42,6 +45,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_USER') or #id == authentication.principle.id")
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUserById(
             @PathVariable UUID id,
@@ -51,18 +55,21 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    @PreAuthorize("hasAuthority('DELETE_USER') or #id == authentication.principle.id")
     @DeleteMapping("/{id}")
     public ResponseEntity<UserResponse> softDeleteUserById(@PathVariable UUID id) {
         UserResponse deletedUser = userInternalAPI.deleteUserById(id);
         return ResponseEntity.ok(deletedUser);
     }
 
+    @PreAuthorize("hasAuthority('READ_ROLE')")
     @GetMapping("/{id}/roles")
     public ResponseEntity<List<AssignedRolesResponse>> getUserRoles(@PathVariable UUID userId) {
         List<AssignedRolesResponse> userRoles = roleAssignmentExternalAPI.getUserRolesByUserId(userId);
         return ResponseEntity.ok(userRoles);
     }
 
+    @PreAuthorize("hasAuthority('READ_TASK')")
     @GetMapping("/{id}/tasks")
     ResponseEntity<List<AssignedTaskResponse>> getAssignedTasksByUserId(@PathVariable UUID userId) {
         List<AssignedTaskResponse> assignedTasks = taskAssignmentExternalAPI.getTasksByUserId(userId);

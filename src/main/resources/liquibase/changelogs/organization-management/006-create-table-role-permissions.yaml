@@ -30,11 +30,3 @@ databaseChangeLog:
                   type: VARCHAR(50)
                   constraints:
                     nullable: false
-              - column:
-                  name: scope
-                  type: VARCHAR(50)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: scope_id
-                  type: BIGINT

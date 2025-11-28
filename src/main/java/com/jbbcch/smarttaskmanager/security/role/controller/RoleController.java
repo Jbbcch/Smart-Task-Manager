@@ -7,6 +7,7 @@ import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedUserRespon
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,18 +21,21 @@ public class RoleController {
     private final RoleInternalAPI roleInternalAPI;
     private final RoleAssignmentAPI roleAssignmentAPI;
 
+    @PreAuthorize("hasAuthority('CREATE_ROLE')")
     @PostMapping
     public ResponseEntity<RoleResponse> createRole(@RequestBody RoleRequest roleRequest) {
         RoleResponse createdRole = roleInternalAPI.createRole(roleRequest);
         return ResponseEntity.ok(createdRole);
     }
 
+    @PreAuthorize("hasAuthority('READ_ROLE')")
     @GetMapping("/{id}")
     public ResponseEntity<RoleResponse> getRoleById(@PathVariable Long id) {
         RoleResponse role = roleInternalAPI.getRoleById(id);
         return ResponseEntity.ok(role);
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_ROLE')")
     @PutMapping("/{id}")
     ResponseEntity<RoleResponse> updateRoleById(
             @PathVariable Long id,
@@ -41,24 +45,28 @@ public class RoleController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    @PreAuthorize("hasAuthority('DELETE_ROLE')")
     @DeleteMapping("/{id}")
     ResponseEntity<RoleResponse> deleteRoleById(@PathVariable Long id) {
         RoleResponse deletedUser = roleInternalAPI.deleteRoleById(id);
         return ResponseEntity.ok(deletedUser);
     }
 
+    @PreAuthorize("hasAuthority('ASSIGN_ROLE')")
     @PostMapping("/assignment")
     public ResponseEntity<UserRoleResponse> assignRoleToUser(@RequestBody UserRoleRequest userRoleRequest) {
         UserRoleResponse response = roleAssignmentAPI.assignRoleToUser(userRoleRequest);
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('ASSIGN_ROLE')")
     @DeleteMapping("/assignment/{id}")
     public ResponseEntity<UserRoleResponse> removeRoleFromUser(@PathVariable Long id) {
         UserRoleResponse response = roleAssignmentAPI.removeRoleFromUserById(id);
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('READ_USER')")
     @GetMapping("/{id}/users")
     public ResponseEntity<List<AssignedUserResponse>> getRoleUsers(@PathVariable Long roleId) {
         List<AssignedUserResponse> roleUsers = roleAssignmentAPI.getRoleUsersByRoleId(roleId);
