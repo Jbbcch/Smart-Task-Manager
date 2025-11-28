@@ -1,5 +1,7 @@
 package com.jbbcch.smarttaskmanager.task.service;
 
+import com.jbbcch.smarttaskmanager.exceptions.ForeignKeyValidationException;
+import com.jbbcch.smarttaskmanager.exceptions.ResourceNotFoundException;
 import com.jbbcch.smarttaskmanager.user.dto.external.AssignedUserResponse;
 import com.jbbcch.smarttaskmanager.task.api.TaskAssignmentAPI;
 import com.jbbcch.smarttaskmanager.task.api.external.TaskAssignmentExternalAPI;
@@ -36,7 +38,7 @@ public class TaskAssignmentService implements TaskAssignmentAPI, TaskAssignmentE
         } catch (DataIntegrityViolationException ex) {
             if (ex.getCause() instanceof ConstraintViolationException cve &&
                     "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
-                throw new RuntimeException("Invalid task or user id");
+                throw new ForeignKeyValidationException("Invalid task or user id");
             }
             throw ex;
         }
@@ -48,7 +50,7 @@ public class TaskAssignmentService implements TaskAssignmentAPI, TaskAssignmentE
     @Transactional
     public TaskUserResponse removeTaskFromUserById(Long id) {
         AssignedTask removedTask = assignedTaskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task-User relation not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task-User relation not found"));
         assignedTaskRepository.deleteById(id);
         return assignedTaskMapper.assignedTaskToResponse(removedTask);
     }

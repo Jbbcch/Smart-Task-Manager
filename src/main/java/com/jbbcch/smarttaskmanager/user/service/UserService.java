@@ -1,6 +1,7 @@
 package com.jbbcch.smarttaskmanager.user.service;
 
 import com.jbbcch.smarttaskmanager.department.api.external.DepartmentAssignmentExternalAPI;
+import com.jbbcch.smarttaskmanager.exceptions.ResourceNotFoundException;
 import com.jbbcch.smarttaskmanager.security.core.api.external.SecurityExternalAPI;
 import com.jbbcch.smarttaskmanager.user.api.UserInternalAPI;
 import com.jbbcch.smarttaskmanager.user.dto.UserRequest;
@@ -39,7 +40,7 @@ public class UserService implements UserInternalAPI {
     @Override
     public UserResponse getUserById(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return userMapper.userToUserResponse(user);
     }
 
@@ -47,7 +48,7 @@ public class UserService implements UserInternalAPI {
     @Transactional
     public UserResponse updateUserById(UUID id, UserRequest request) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         userMapper.updateUserFromRequest(request, user);
         user.setUpdatedBy(request.getActionBy());
         if (request.getPassword() != null) {
@@ -61,7 +62,7 @@ public class UserService implements UserInternalAPI {
     @Transactional
     public UserResponse deleteUserById(UUID id) {
         User deletedUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         deletedUser.setIsDeleted(true);
         userRepository.save(deletedUser);
         return userMapper.userToUserResponse(deletedUser);

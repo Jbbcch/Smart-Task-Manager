@@ -6,6 +6,8 @@ import com.jbbcch.smarttaskmanager.department.dto.DepartmentResponse;
 import com.jbbcch.smarttaskmanager.department.mapper.DepartmentMapper;
 import com.jbbcch.smarttaskmanager.department.model.entity.Department;
 import com.jbbcch.smarttaskmanager.department.repository.DepartmentRepository;
+import com.jbbcch.smarttaskmanager.exceptions.OperationNotAllowedException;
+import com.jbbcch.smarttaskmanager.exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,7 @@ public class DepartmentService implements DepartmentInternalAPI {
     @Transactional
     public DepartmentResponse updateDepartmentById(Long id, DepartmentRequest request) {
         Department department = departmentRepository.findById(id)
-                .orElseThrow( () -> new RuntimeException("Department not found"));
+                .orElseThrow( () -> new ResourceNotFoundException("Department not found"));
         departmentMapper.updateDepartmentFromRequest(request, department);
         department.setUpdatedBy(request.getActionBy());
         departmentRepository.save(department);
@@ -41,10 +43,10 @@ public class DepartmentService implements DepartmentInternalAPI {
     @Transactional
     public DepartmentResponse deleteDepartmentById(Long id) {
         if (id == 0L) {
-            throw new RuntimeException("Cannot delete global department");
+            throw new OperationNotAllowedException("Cannot delete global department");
         } // yes this is horrible, but I don't care right now
         Department deletedDepartment = departmentRepository.findById(id)
-                .orElseThrow( () -> new RuntimeException("Department not found"));
+                .orElseThrow( () -> new ResourceNotFoundException("Department not found"));
         departmentRepository.deleteById(id);
         return departmentMapper.departmentToDepartmentResponse(deletedDepartment);
     }
@@ -53,7 +55,7 @@ public class DepartmentService implements DepartmentInternalAPI {
     @Transactional
     public DepartmentResponse getDepartmentById(Long id) {
         Department department = departmentRepository.findById(id)
-                .orElseThrow( () -> new RuntimeException("Department not found"));
+                .orElseThrow( () -> new ResourceNotFoundException("Department not found"));
         return departmentMapper.departmentToDepartmentResponse(department);
     }
 }

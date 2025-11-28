@@ -1,5 +1,7 @@
 package com.jbbcch.smarttaskmanager.project.service;
 
+import com.jbbcch.smarttaskmanager.exceptions.ForeignKeyValidationException;
+import com.jbbcch.smarttaskmanager.exceptions.ResourceNotFoundException;
 import com.jbbcch.smarttaskmanager.project.api.ProjectAssignmentAPI;
 import com.jbbcch.smarttaskmanager.project.api.external.ProjectAssignmentExternalAPI;
 import com.jbbcch.smarttaskmanager.department.dto.external.AssignedDepartmentResponse;
@@ -35,7 +37,7 @@ public class ProjectAssignmentService implements ProjectAssignmentAPI, ProjectAs
         } catch (DataIntegrityViolationException ex) {
             if (ex.getCause() instanceof ConstraintViolationException cve &&
                     "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
-                throw new RuntimeException("Invalid project or department id");
+                throw new ForeignKeyValidationException("Invalid project or department id");
             }
             throw ex;
         }
@@ -47,7 +49,7 @@ public class ProjectAssignmentService implements ProjectAssignmentAPI, ProjectAs
     @Transactional
     public ProjectDepartmentResponse removeProjectFromDepartmentById(Long id) {
         AssignedProject removedProject = assignedProjectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Project-Department relation not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Project-Department relation not found"));
         assignedProjectRepository.deleteById(id);
         return assignedProjectMapper.assignedProjectToResponse(removedProject);
     }

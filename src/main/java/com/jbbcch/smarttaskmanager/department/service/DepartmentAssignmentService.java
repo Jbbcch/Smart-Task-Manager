@@ -8,6 +8,8 @@ import com.jbbcch.smarttaskmanager.department.mapper.DepartmentUserMapper;
 import com.jbbcch.smarttaskmanager.department.model.entity.DepartmentUser;
 import com.jbbcch.smarttaskmanager.department.repository.DepartmentUserRepository;
 import com.jbbcch.smarttaskmanager.department.dto.external.AssignedDepartmentResponse;
+import com.jbbcch.smarttaskmanager.exceptions.ForeignKeyValidationException;
+import com.jbbcch.smarttaskmanager.exceptions.ResourceNotFoundException;
 import com.jbbcch.smarttaskmanager.user.dto.external.AssignedUserResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +38,7 @@ public class DepartmentAssignmentService implements DepartmentAssignmentAPI, Dep
         } catch (DataIntegrityViolationException ex) {
             if (ex.getCause() instanceof ConstraintViolationException cve &&
                     "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
-                throw new RuntimeException("Invalid user or department id");
+                throw new ForeignKeyValidationException("Invalid user or department id");
             }
             throw ex;
         }
@@ -48,7 +50,7 @@ public class DepartmentAssignmentService implements DepartmentAssignmentAPI, Dep
     @Transactional
     public DepartmentUserResponse removeUserFromDepartmentById(Long id) {
         DepartmentUser departmentUser = departmentUserRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Department-User relation nt found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Department-User relation not found"));
         departmentUserRepository.deleteById(id);
         return departmentUserMapper.departmentUserToResponse(departmentUser);
     }

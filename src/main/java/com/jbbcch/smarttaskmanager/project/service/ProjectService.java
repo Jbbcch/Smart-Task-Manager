@@ -1,5 +1,6 @@
 package com.jbbcch.smarttaskmanager.project.service;
 
+import com.jbbcch.smarttaskmanager.exceptions.ResourceNotFoundException;
 import com.jbbcch.smarttaskmanager.project.api.ProjectInternalAPI;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectRequest;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectResponse;
@@ -30,7 +31,7 @@ public class ProjectService implements ProjectInternalAPI {
     @Transactional
     public ProjectResponse getProjectById(Long id) {
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Project not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
         return projectMapper.projectToProjectResponse(project);
     }
 
@@ -38,7 +39,7 @@ public class ProjectService implements ProjectInternalAPI {
     @Transactional
     public ProjectResponse updateProjectById(Long id, ProjectRequest request) {
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Project not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
         projectMapper.updateProjectFromRequest(request, project);
         project.setUpdatedBy(request.getActionBy());
         projectRepository.save(project);
@@ -49,7 +50,7 @@ public class ProjectService implements ProjectInternalAPI {
     @Transactional
     public ProjectResponse deleteProjectById(Long id) {
         Project deletedProject = projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Project not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
         projectRepository.deleteById(id);
         return projectMapper.projectToProjectResponse(deletedProject);
     }

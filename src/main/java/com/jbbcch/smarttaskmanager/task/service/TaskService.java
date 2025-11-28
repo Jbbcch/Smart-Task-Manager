@@ -1,5 +1,7 @@
 package com.jbbcch.smarttaskmanager.task.service;
 
+import com.jbbcch.smarttaskmanager.exceptions.ForeignKeyValidationException;
+import com.jbbcch.smarttaskmanager.exceptions.ResourceNotFoundException;
 import com.jbbcch.smarttaskmanager.task.api.TaskInternalAPI;
 import com.jbbcch.smarttaskmanager.task.api.external.TaskExternalAPI;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskRequest;
@@ -35,7 +37,7 @@ public class TaskService implements TaskInternalAPI, TaskExternalAPI {
         } catch (DataIntegrityViolationException ex) {
             if (ex.getCause() instanceof ConstraintViolationException cve &&
                     "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
-                throw new RuntimeException("Project with id " + task.getProjectId() + " does not exist");
+                throw new ForeignKeyValidationException("Project with id " + task.getProjectId() + " does not exist");
             }
             throw ex;
         }
@@ -47,7 +49,7 @@ public class TaskService implements TaskInternalAPI, TaskExternalAPI {
     @Transactional
     public TaskResponse getTaskById(Long id) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         return taskMapper.taskToTaskResponse(task);
     }
 
@@ -55,7 +57,7 @@ public class TaskService implements TaskInternalAPI, TaskExternalAPI {
     @Transactional
     public TaskResponse changeTaskStatus(Long id, TaskStatus taskStatus) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         task.setStatus(taskStatus);
         taskRepository.save(task);
         return taskMapper.taskToTaskResponse(task);
@@ -65,7 +67,7 @@ public class TaskService implements TaskInternalAPI, TaskExternalAPI {
     @Transactional
     public TaskResponse updateTaskById(Long id, TaskRequest request) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         taskMapper.updateTaskFromRequest(request, task);
         task.setUpdatedBy(request.getActionBy());
         taskRepository.save(task);
@@ -76,7 +78,7 @@ public class TaskService implements TaskInternalAPI, TaskExternalAPI {
     @Transactional
     public TaskResponse deleteTaskById(Long id) {
         Task deletedTask = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         taskRepository.deleteById(id);
         return taskMapper.taskToTaskResponse(deletedTask);
     }

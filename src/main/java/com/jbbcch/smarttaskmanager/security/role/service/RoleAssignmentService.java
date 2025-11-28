@@ -1,5 +1,7 @@
 package com.jbbcch.smarttaskmanager.security.role.service;
 
+import com.jbbcch.smarttaskmanager.exceptions.ForeignKeyValidationException;
+import com.jbbcch.smarttaskmanager.exceptions.ResourceNotFoundException;
 import com.jbbcch.smarttaskmanager.security.role.api.RoleAssignmentAPI;
 import com.jbbcch.smarttaskmanager.security.role.api.external.RoleAssignmentExternalAPI;
 import com.jbbcch.smarttaskmanager.user.dto.external.AssignedUserResponse;
@@ -36,7 +38,7 @@ public class RoleAssignmentService implements RoleAssignmentAPI, RoleAssignmentE
         } catch (DataIntegrityViolationException ex) {
             if (ex.getCause() instanceof ConstraintViolationException cve &&
                     "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
-                throw new RuntimeException("Invalid role or user id");
+                throw new ForeignKeyValidationException("Invalid role or user id");
             }
             throw ex;
         }
@@ -48,7 +50,7 @@ public class RoleAssignmentService implements RoleAssignmentAPI, RoleAssignmentE
     @Transactional
     public UserRoleResponse removeRoleFromUserById(Long id) {
         UserRole removedUserRole = userRoleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User-Role relation not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User-Role relation not found"));
         userRoleRepository.deleteById(id);
         return userRoleMapper.userRoleToUserRoleResponse(removedUserRole);
     }

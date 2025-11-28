@@ -1,5 +1,7 @@
 package com.jbbcch.smarttaskmanager.task.service;
 
+import com.jbbcch.smarttaskmanager.exceptions.ForeignKeyValidationException;
+import com.jbbcch.smarttaskmanager.exceptions.ResourceNotFoundException;
 import com.jbbcch.smarttaskmanager.task.api.SubtaskInternalAPI;
 import com.jbbcch.smarttaskmanager.task.api.external.SubtaskExternalAPI;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskRequest;
@@ -42,7 +44,7 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
         } catch (DataIntegrityViolationException ex) {
             if (ex.getCause() instanceof ConstraintViolationException cve &&
                     "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
-                throw new RuntimeException("Task with id " + taskId + " does not exist");
+                throw new ForeignKeyValidationException("Task with id " + taskId + " does not exist");
             }
             throw ex;
         }
@@ -54,7 +56,7 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
     @Transactional
     public SubtaskResponse updateSubtaskById(Long id, SubtaskRequest request) {
         Subtask subtask = subtaskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subtask not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Subtask not found"));
         subtaskMapper.updateSubtaskFromRequest(request, subtask);
         subtask.setUpdatedBy(request.getActionBy());
         subtaskRepository.save(subtask);
@@ -65,7 +67,7 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
     @Transactional
     public SubtaskResponse deleteSubtaskById(Long id) {
         Subtask deletedSubtask = subtaskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subtask not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Subtask not found"));
         subtaskRepository.deleteById(id);
         return subtaskMapper.subtaskToSubtaskResponse(deletedSubtask);
     }
@@ -84,7 +86,7 @@ public class SubtaskService implements SubtaskInternalAPI, SubtaskExternalAPI {
     @Transactional
     public SubtaskResponse switchStatusById(Long subtaskId) {
         Subtask subtask = subtaskRepository.findById(subtaskId)
-                .orElseThrow(() -> new RuntimeException("Subtask not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Subtask not found"));
         subtask.setDone(!subtask.getDone());
         subtaskRepository.save(subtask);
         return  subtaskMapper.subtaskToSubtaskResponse(subtask);

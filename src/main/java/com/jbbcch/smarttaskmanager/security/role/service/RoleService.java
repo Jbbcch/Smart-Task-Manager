@@ -1,5 +1,6 @@
 package com.jbbcch.smarttaskmanager.security.role.service;
 
+import com.jbbcch.smarttaskmanager.exceptions.ResourceNotFoundException;
 import com.jbbcch.smarttaskmanager.security.role.api.RoleInternalAPI;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleRequest;
 import com.jbbcch.smarttaskmanager.security.role.dto.RoleResponse;
@@ -46,7 +47,7 @@ public class RoleService implements RoleInternalAPI {
     @Transactional
     public RoleResponse updateRoleById(Long id, RoleRequest roleRequest) {
         Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
 
         roleMapper.updateRoleFromRequest(roleRequest, role);
         role.setUpdatedBy(roleRequest.getActionBy());
@@ -71,7 +72,7 @@ public class RoleService implements RoleInternalAPI {
     @Transactional
     public RoleResponse getRoleById(Long id) {
         Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
 
         RoleResponse roleResponse = roleMapper.roleToRoleResponse(role);
         List<String> authorities = authorityRepository.findAuthoritiesByRoleId(id).stream()
@@ -85,9 +86,8 @@ public class RoleService implements RoleInternalAPI {
     @Transactional
     public RoleResponse deleteRoleById(Long id) {
         Role deletedRole = roleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
         roleRepository.deleteById(id);
-        authorityRepository.deleteByRoleId(id);
 
         // not important to know what authorities it had once it's deleted
         // thus, not going to bother with setting them for the response
