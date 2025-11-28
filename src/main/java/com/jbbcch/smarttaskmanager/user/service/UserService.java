@@ -1,5 +1,6 @@
 package com.jbbcch.smarttaskmanager.user.service;
 
+import com.jbbcch.smarttaskmanager.department.api.external.DepartmentAssignmentExternalAPI;
 import com.jbbcch.smarttaskmanager.security.core.api.external.SecurityExternalAPI;
 import com.jbbcch.smarttaskmanager.user.api.UserInternalAPI;
 import com.jbbcch.smarttaskmanager.user.dto.UserRequest;
@@ -22,6 +23,7 @@ public class UserService implements UserInternalAPI {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final SecurityExternalAPI securityExternalAPI;
+    private final DepartmentAssignmentExternalAPI departmentAssignmentExternalAPI;
 
     @Override
     @Transactional
@@ -30,6 +32,7 @@ public class UserService implements UserInternalAPI {
         user.setCreatedBy(request.getActionBy());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
+        departmentAssignmentExternalAPI.assignDefaultDepartmentToUser(user.getId(), request.getActionBy());
         return userMapper.userToUserResponse(user);
     }
 

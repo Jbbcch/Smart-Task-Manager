@@ -38,7 +38,6 @@ public class TaskController {
         return ResponseEntity.ok(createdTask);
     }
 
-    @PreAuthorize("hasAuthority('READ_TASK')")
     @GetMapping("/{id}")
     ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
         TaskResponse response = taskInternalAPI.getTaskById(id);
@@ -55,7 +54,6 @@ public class TaskController {
         return ResponseEntity.ok(updatedTask);
     }
 
-    @PreAuthorize("hasAuthority('READ_TASK')")
     @PatchMapping("/{id}")
     public ResponseEntity<TaskResponse> changeTaskStatus(
             @PathVariable Long id,
@@ -72,7 +70,6 @@ public class TaskController {
         return ResponseEntity.ok(deletedTask);
     }
 
-    @PreAuthorize("hasAuthority('READ_TASK')")
     @GetMapping("/{id}/subtasks")
     public ResponseEntity<List<SubtaskResponse>> getSubtasksByTaskId(@PathVariable Long id) {
         List<SubtaskResponse> subtaskResponseList = subtaskExternalAPI.getSubtasksByTaskId(id);

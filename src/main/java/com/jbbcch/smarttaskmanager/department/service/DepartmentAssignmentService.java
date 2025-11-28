@@ -62,4 +62,15 @@ public class DepartmentAssignmentService implements DepartmentAssignmentAPI, Dep
     public List<AssignedUserResponse> getUsersByDepartmentId(Long departmentId) {
         return departmentUserRepository.getUsersByDepartmentId(departmentId);
     }
+
+    @Override
+    @Transactional
+    public void assignDefaultDepartmentToUser(UUID userId, UUID actionBy) {
+        DepartmentUserRequest request = new DepartmentUserRequest();
+        request.setUserId(userId);
+        request.setDepartmentId(0L);
+        request.setActionBy(actionBy);
+
+        assignUserToDepartment(request);
+    }
 }

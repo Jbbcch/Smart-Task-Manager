@@ -38,5 +38,4 @@ databaseChangeLog:
               (1, 'READ_DEPARTMENT'),
               (1, 'READ_USER'),
               (1, 'READ_ROLE'),
-              (1, 'READ_PROJECT'),
-              (1, 'READ_TASK')
+              (1, 'READ_PROJECT')

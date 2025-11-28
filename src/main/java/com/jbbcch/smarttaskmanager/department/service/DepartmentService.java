@@ -40,6 +40,9 @@ public class DepartmentService implements DepartmentInternalAPI {
     @Override
     @Transactional
     public DepartmentResponse deleteDepartmentById(Long id) {
+        if (id == 0L) {
+            throw new RuntimeException("Cannot delete global department");
+        } // yes this is horrible, but I don't care right now
         Department deletedDepartment = departmentRepository.findById(id)
                 .orElseThrow( () -> new RuntimeException("Department not found"));
         departmentRepository.deleteById(id);

@@ -44,7 +44,6 @@ databaseChangeLog:
               (0, 'READ_USER'),
               (0, 'READ_ROLE'),
               (0, 'READ_PROJECT'),
-              (0, 'READ_TASK'),
               (0, 'UPDATE_DEPARTMENT'),
               (0, 'UPDATE_USER'),
               (0, 'UPDATE_ROLE'),

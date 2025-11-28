@@ -36,7 +36,6 @@ public class SubtaskController {
         return ResponseEntity.ok(updatedSubtask);
     }
 
-    @PreAuthorize("hasAuthority('READ_TASK')")
     @PatchMapping("/{id}")
     public ResponseEntity<SubtaskResponse> setSubtaskStatus(@PathVariable Long id) {
         SubtaskResponse subtaskResponse = subtaskInternalAPI.switchStatusById(id);

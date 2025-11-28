@@ -4,7 +4,7 @@ public enum Permission {
     CREATE_TASK,
     UPDATE_TASK,
     DELETE_TASK,
-    READ_TASK,
+    // no READ_TASK so that all users can read tasks by default
     ASSIGN_TASK_USER,
 
     CREATE_PROJECT,
