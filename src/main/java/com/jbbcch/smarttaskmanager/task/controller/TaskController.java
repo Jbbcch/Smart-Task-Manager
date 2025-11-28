@@ -1,6 +1,6 @@
 package com.jbbcch.smarttaskmanager.task.controller;
 
-import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedUserResponse;
+import com.jbbcch.smarttaskmanager.user.dto.external.AssignedUserResponse;
 import com.jbbcch.smarttaskmanager.task.api.TaskAssignmentAPI;
 import com.jbbcch.smarttaskmanager.task.api.TaskInternalAPI;
 import com.jbbcch.smarttaskmanager.task.api.external.SubtaskExternalAPI;
@@ -79,14 +79,14 @@ public class TaskController {
         return  ResponseEntity.ok(subtaskResponseList);
     }
 
-    @PreAuthorize("hasAuthority('ASSIGN_TASK')")
+    @PreAuthorize("hasAuthority('ASSIGN_TASK_USER')")
     @PostMapping("/assignment")
     ResponseEntity<TaskUserResponse> assignTaskToUser(@RequestBody TaskUserRequest request) {
         TaskUserResponse assignedTask = taskAssignmentAPI.assignTaskToUser(request);
         return ResponseEntity.ok(assignedTask);
     }
 
-    @PreAuthorize("hasAuthority('ASSIGN_TASK')")
+    @PreAuthorize("hasAuthority('ASSIGN_TASK_USER')")
     @DeleteMapping("/assignment/{id}")
     ResponseEntity<TaskUserResponse> removeTaskFromUserById(@PathVariable Long id) {
         TaskUserResponse removedTask = taskAssignmentAPI.removeTaskFromUserById(id);
@@ -94,7 +94,7 @@ public class TaskController {
     }
 
     @PreAuthorize("hasAuthority('READ_USER')")
-    @GetMapping("/{id}/users")
+    @GetMapping("/{taskId}/users")
     ResponseEntity<List<AssignedUserResponse>> getAssignedUsersByTaskId(@PathVariable Long taskId) {
         List<AssignedUserResponse> assignedUsers = taskAssignmentAPI.getUsersByTaskId(taskId);
         return ResponseEntity.ok(assignedUsers);

@@ -1,6 +1,6 @@
 package com.jbbcch.smarttaskmanager.task.service;
 
-import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedUserResponse;
+import com.jbbcch.smarttaskmanager.user.dto.external.AssignedUserResponse;
 import com.jbbcch.smarttaskmanager.task.api.TaskAssignmentAPI;
 import com.jbbcch.smarttaskmanager.task.api.external.TaskAssignmentExternalAPI;
 import com.jbbcch.smarttaskmanager.task.dto.TaskUserRequest;

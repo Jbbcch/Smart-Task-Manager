@@ -22,6 +22,7 @@ public class AssignedTaskResponse {
     TaskPriority priority;
     LocalDateTime plannedEndDate;
     LocalDateTime actualEndDate;
+    Long assignmentId;
     LocalDateTime assignedAt;
     UUID assignedBy;
 }

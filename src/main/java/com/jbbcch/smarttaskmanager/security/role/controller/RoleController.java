@@ -3,7 +3,7 @@ package com.jbbcch.smarttaskmanager.security.role.controller;
 import com.jbbcch.smarttaskmanager.security.role.api.RoleAssignmentAPI;
 import com.jbbcch.smarttaskmanager.security.role.api.RoleInternalAPI;
 import com.jbbcch.smarttaskmanager.security.role.dto.*;
-import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedUserResponse;
+import com.jbbcch.smarttaskmanager.user.dto.external.AssignedUserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -52,14 +52,14 @@ public class RoleController {
         return ResponseEntity.ok(deletedUser);
     }
 
-    @PreAuthorize("hasAuthority('ASSIGN_ROLE')")
+    @PreAuthorize("hasAuthority('ASSIGN_ROLE_USER')")
     @PostMapping("/assignment")
     public ResponseEntity<UserRoleResponse> assignRoleToUser(@RequestBody UserRoleRequest userRoleRequest) {
         UserRoleResponse response = roleAssignmentAPI.assignRoleToUser(userRoleRequest);
         return ResponseEntity.ok(response);
     }
 
-    @PreAuthorize("hasAuthority('ASSIGN_ROLE')")
+    @PreAuthorize("hasAuthority('ASSIGN_ROLE_USER')")
     @DeleteMapping("/assignment/{id}")
     public ResponseEntity<UserRoleResponse> removeRoleFromUser(@PathVariable Long id) {
         UserRoleResponse response = roleAssignmentAPI.removeRoleFromUserById(id);
@@ -67,7 +67,7 @@ public class RoleController {
     }
 
     @PreAuthorize("hasAuthority('READ_USER')")
-    @GetMapping("/{id}/users")
+    @GetMapping("/{roleId}/users")
     public ResponseEntity<List<AssignedUserResponse>> getRoleUsers(@PathVariable Long roleId) {
         List<AssignedUserResponse> roleUsers = roleAssignmentAPI.getRoleUsersByRoleId(roleId);
         return ResponseEntity.ok(roleUsers);

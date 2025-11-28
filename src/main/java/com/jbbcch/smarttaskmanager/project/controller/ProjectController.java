@@ -3,6 +3,7 @@ package com.jbbcch.smarttaskmanager.project.controller;
 import com.jbbcch.smarttaskmanager.project.api.ProjectAssignmentAPI;
 import com.jbbcch.smarttaskmanager.project.api.ProjectInternalAPI;
 import com.jbbcch.smarttaskmanager.project.dto.*;
+import com.jbbcch.smarttaskmanager.department.dto.external.AssignedDepartmentResponse;
 import com.jbbcch.smarttaskmanager.task.api.external.TaskExternalAPI;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
 import jakarta.validation.Valid;
@@ -59,14 +60,14 @@ public class ProjectController {
         return ResponseEntity.ok(deletedProject);
     }
 
-    @PreAuthorize("hasAuthority('ASSIGN_PROJECT')")
+    @PreAuthorize("hasAuthority('ASSIGN_PROJECT_DEPARTMENT')")
     @PostMapping("/assignment")
     ResponseEntity<ProjectDepartmentResponse> assignProjectToDepartment(@RequestBody ProjectDepartmentRequest request) {
         ProjectDepartmentResponse assignedProject = projectAssignmentAPI.assignProjectToDepartment(request);
         return ResponseEntity.ok(assignedProject);
     }
 
-    @PreAuthorize("hasAuthority('ASSIGN_PROJECT')")
+    @PreAuthorize("hasAuthority('ASSIGN_PROJECT_DEPARTMENT')")
     @DeleteMapping("/assignment/{id}")
     ResponseEntity<ProjectDepartmentResponse> removeProjectFromDepartmentById(@PathVariable Long id) {
         ProjectDepartmentResponse removedProject = projectAssignmentAPI.removeProjectFromDepartmentById(id);
@@ -74,7 +75,7 @@ public class ProjectController {
     }
 
     @PreAuthorize("hasAuthority('READ_DEPARTMENT')")
-    @GetMapping("/{id}/departments")
+    @GetMapping("/{projectId}/departments")
     ResponseEntity<List<AssignedDepartmentResponse>> getDepartmentsByProjectId(@PathVariable Long projectId) {
         List<AssignedDepartmentResponse> departmentResponses = projectAssignmentAPI.getDepartmentsByProjectId(projectId);
         return ResponseEntity.ok(departmentResponses);

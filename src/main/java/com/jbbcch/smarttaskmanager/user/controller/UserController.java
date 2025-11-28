@@ -1,5 +1,7 @@
 package com.jbbcch.smarttaskmanager.user.controller;
 
+import com.jbbcch.smarttaskmanager.department.api.external.DepartmentAssignmentExternalAPI;
+import com.jbbcch.smarttaskmanager.department.dto.external.AssignedDepartmentResponse;
 import com.jbbcch.smarttaskmanager.security.role.api.external.RoleAssignmentExternalAPI;
 import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedRolesResponse;
 import com.jbbcch.smarttaskmanager.task.api.external.TaskAssignmentExternalAPI;
@@ -24,6 +26,7 @@ public class UserController {
     private final UserInternalAPI userInternalAPI;
     private final RoleAssignmentExternalAPI roleAssignmentExternalAPI;
     private final TaskAssignmentExternalAPI taskAssignmentExternalAPI;
+    private final DepartmentAssignmentExternalAPI departmentAssignmentExternalAPI;
 
     @PreAuthorize("hasAuthority('CREATE_USER')")
     @PostMapping
@@ -63,16 +66,22 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('READ_ROLE')")
-    @GetMapping("/{id}/roles")
+    @GetMapping("/{userId}/roles")
     public ResponseEntity<List<AssignedRolesResponse>> getUserRoles(@PathVariable UUID userId) {
         List<AssignedRolesResponse> userRoles = roleAssignmentExternalAPI.getUserRolesByUserId(userId);
         return ResponseEntity.ok(userRoles);
     }
 
     @PreAuthorize("hasAuthority('READ_TASK')")
-    @GetMapping("/{id}/tasks")
-    ResponseEntity<List<AssignedTaskResponse>> getAssignedTasksByUserId(@PathVariable UUID userId) {
+    @GetMapping("/{userId}/tasks")
+    public ResponseEntity<List<AssignedTaskResponse>> getAssignedTasksByUserId(@PathVariable UUID userId) {
         List<AssignedTaskResponse> assignedTasks = taskAssignmentExternalAPI.getTasksByUserId(userId);
         return ResponseEntity.ok(assignedTasks);
+    }
+
+    @GetMapping("/{userId}/departments")
+    public ResponseEntity<List<AssignedDepartmentResponse>> getDepartmentsByUserId(@PathVariable UUID userId) {
+        List<AssignedDepartmentResponse> responseList = departmentAssignmentExternalAPI.getDepartmentsByUserId(userId);
+        return ResponseEntity.ok(responseList);
     }
 }

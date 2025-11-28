@@ -1,4 +1,4 @@
-package com.jbbcch.smarttaskmanager.security.role.dto.external;
+package com.jbbcch.smarttaskmanager.department.dto.external;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,10 +13,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AssignedUserResponse {
-    UUID id;
-    String username;
-    String email;
+public class AssignedDepartmentResponse {
+    Long id;
+    String name;
+    String description;
+    Long assignmentId;
     LocalDateTime assignedAt;
     UUID assignedBy;
 }

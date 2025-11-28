@@ -1,6 +1,6 @@
 package com.jbbcch.smarttaskmanager.project.api;
 
-import com.jbbcch.smarttaskmanager.project.dto.AssignedDepartmentResponse;
+import com.jbbcch.smarttaskmanager.department.dto.external.AssignedDepartmentResponse;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentRequest;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentResponse;
 

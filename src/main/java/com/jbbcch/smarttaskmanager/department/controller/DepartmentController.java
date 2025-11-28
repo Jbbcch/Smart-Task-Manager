@@ -1,10 +1,14 @@
 package com.jbbcch.smarttaskmanager.department.controller;
 
+import com.jbbcch.smarttaskmanager.department.api.DepartmentAssignmentAPI;
 import com.jbbcch.smarttaskmanager.department.api.DepartmentInternalAPI;
 import com.jbbcch.smarttaskmanager.department.dto.DepartmentRequest;
 import com.jbbcch.smarttaskmanager.department.dto.DepartmentResponse;
+import com.jbbcch.smarttaskmanager.department.dto.DepartmentUserRequest;
+import com.jbbcch.smarttaskmanager.department.dto.DepartmentUserResponse;
 import com.jbbcch.smarttaskmanager.project.api.external.ProjectAssignmentExternalAPI;
 import com.jbbcch.smarttaskmanager.project.dto.external.AssignedProjectResponse;
+import com.jbbcch.smarttaskmanager.user.dto.external.AssignedUserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +24,7 @@ public class DepartmentController {
 
     private final DepartmentInternalAPI departmentInternalAPI;
     private final ProjectAssignmentExternalAPI projectAssignmentExternalAPI;
+    private final DepartmentAssignmentAPI departmentAssignmentAPI;
 
     @PreAuthorize("hasAuthority('READ_DEPARTMENT')")
     @GetMapping("/{id}")
@@ -53,9 +58,30 @@ public class DepartmentController {
     }
 
     @PreAuthorize("hasAuthority('READ_PROJECT')")
-    @GetMapping("/{id}/projects")
+    @GetMapping("/{departmentId}/projects")
     public ResponseEntity<List<AssignedProjectResponse>> getDepartmentProjects(@PathVariable Long departmentId) {
         List<AssignedProjectResponse> assignedProjects = projectAssignmentExternalAPI.getProjectsByDepartmentId(departmentId);
         return ResponseEntity.ok(assignedProjects);
+    }
+
+    @PreAuthorize("hasAuthority('ASSIGN_USER_DEPARTMENT')")
+    @PostMapping("/assignment")
+    public ResponseEntity<DepartmentUserResponse> assignUserToDepartment(@RequestBody DepartmentUserRequest request) {
+        DepartmentUserResponse response = departmentAssignmentAPI.assignUserToDepartment(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasAuthority('ASSIGN_USER_DEPARTMENT')")
+    @PostMapping("/assignment/{id}")
+    public ResponseEntity<DepartmentUserResponse> removeUserFromDepartment(@RequestBody Long id) {
+        DepartmentUserResponse response = departmentAssignmentAPI.removeUserFromDepartmentById(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasAuthority('READ_USER')")
+    @GetMapping("/{departmentId}/users")
+    public ResponseEntity<List<AssignedUserResponse>> getUsersByDepartmentId(@PathVariable Long departmentId) {
+        List<AssignedUserResponse> responseList = departmentAssignmentAPI.getUsersByDepartmentId(departmentId);
+        return ResponseEntity.ok(responseList);
     }
 }

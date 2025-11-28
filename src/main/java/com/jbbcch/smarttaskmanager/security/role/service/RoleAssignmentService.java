@@ -2,7 +2,7 @@ package com.jbbcch.smarttaskmanager.security.role.service;
 
 import com.jbbcch.smarttaskmanager.security.role.api.RoleAssignmentAPI;
 import com.jbbcch.smarttaskmanager.security.role.api.external.RoleAssignmentExternalAPI;
-import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedUserResponse;
+import com.jbbcch.smarttaskmanager.user.dto.external.AssignedUserResponse;
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleRequest;
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleResponse;
 import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedRolesResponse;

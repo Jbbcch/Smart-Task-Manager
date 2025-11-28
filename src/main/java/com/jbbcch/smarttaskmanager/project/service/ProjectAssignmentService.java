@@ -2,7 +2,7 @@ package com.jbbcch.smarttaskmanager.project.service;
 
 import com.jbbcch.smarttaskmanager.project.api.ProjectAssignmentAPI;
 import com.jbbcch.smarttaskmanager.project.api.external.ProjectAssignmentExternalAPI;
-import com.jbbcch.smarttaskmanager.project.dto.AssignedDepartmentResponse;
+import com.jbbcch.smarttaskmanager.department.dto.external.AssignedDepartmentResponse;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentRequest;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentResponse;
 import com.jbbcch.smarttaskmanager.project.dto.external.AssignedProjectResponse;

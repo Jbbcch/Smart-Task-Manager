@@ -1,4 +1,4 @@
-package com.jbbcch.smarttaskmanager.project.dto;
+package com.jbbcch.smarttaskmanager.department.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,17 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AssignedDepartmentResponse {
-    Long id;
-    String name;
-    String description;
-    LocalDateTime assignedAt;
-    UUID assignedBy;
+public class DepartmentUserRequest {
+    Long departmentId;
+    UUID userId;
+    UUID actionBy;
 }

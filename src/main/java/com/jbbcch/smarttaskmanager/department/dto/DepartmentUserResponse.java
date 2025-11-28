@@ -1,6 +1,5 @@
-package com.jbbcch.smarttaskmanager.project.dto.external;
+package com.jbbcch.smarttaskmanager.department.dto;
 
-import com.jbbcch.smarttaskmanager.project.model.enums.ProjectStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,12 +13,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AssignedProjectResponse {
+public class DepartmentUserResponse {
     Long id;
-    String name;
-    String description;
-    ProjectStatus status;
-    Long assignmentId;
+    Long departmentId;
+    UUID userId;
     LocalDateTime assignedAt;
     UUID assignedBy;
 }
