@@ -11,6 +11,7 @@ import com.jbbcch.smarttaskmanager.project.dto.external.AssignedProjectResponse;
 import com.jbbcch.smarttaskmanager.user.dto.external.AssignedUserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class DepartmentController {
     @PostMapping
     public ResponseEntity<DepartmentResponse> createDepartment(@RequestBody @Valid DepartmentRequest request) {
         DepartmentResponse createdDepartment = departmentInternalAPI.createDepartment(request);
-        return ResponseEntity.ok(createdDepartment);
+        return new ResponseEntity<>(createdDepartment, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('UPDATE_DEPARTMENT')")
@@ -68,11 +69,11 @@ public class DepartmentController {
     @PostMapping("/assignment")
     public ResponseEntity<DepartmentUserResponse> assignUserToDepartment(@RequestBody DepartmentUserRequest request) {
         DepartmentUserResponse response = departmentAssignmentAPI.assignUserToDepartment(request);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('ASSIGN_USER_DEPARTMENT')")
-    @PostMapping("/assignment/{id}")
+    @DeleteMapping("/assignment/{id}")
     public ResponseEntity<DepartmentUserResponse> removeUserFromDepartment(@RequestBody Long id) {
         DepartmentUserResponse response = departmentAssignmentAPI.removeUserFromDepartmentById(id);
         return ResponseEntity.ok(response);

@@ -6,6 +6,7 @@ import com.jbbcch.smarttaskmanager.security.role.dto.*;
 import com.jbbcch.smarttaskmanager.user.dto.external.AssignedUserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class RoleController {
     @PostMapping
     public ResponseEntity<RoleResponse> createRole(@RequestBody RoleRequest roleRequest) {
         RoleResponse createdRole = roleInternalAPI.createRole(roleRequest);
-        return ResponseEntity.ok(createdRole);
+        return new ResponseEntity<>(createdRole, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('READ_ROLE')")
@@ -56,7 +57,7 @@ public class RoleController {
     @PostMapping("/assignment")
     public ResponseEntity<UserRoleResponse> assignRoleToUser(@RequestBody UserRoleRequest userRoleRequest) {
         UserRoleResponse response = roleAssignmentAPI.assignRoleToUser(userRoleRequest);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('ASSIGN_ROLE_USER')")

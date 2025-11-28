@@ -5,6 +5,7 @@ import com.jbbcch.smarttaskmanager.task.dto.SubtaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class SubtaskController {
             @RequestBody @Valid SubtaskRequest request
     ) {
         SubtaskResponse createdSubtask = subtaskInternalAPI.createSubtask(id, request);
-        return ResponseEntity.ok(createdSubtask);
+        return new ResponseEntity<>(createdSubtask, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('UPDATE_TASK')")

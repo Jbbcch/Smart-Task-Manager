@@ -8,6 +8,7 @@ import com.jbbcch.smarttaskmanager.task.api.external.TaskExternalAPI;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class ProjectController {
     @PostMapping
     ResponseEntity<ProjectResponse> createProject(@RequestBody @Valid ProjectRequest request) {
         ProjectResponse createdProject = projectInternalAPI.createProject(request);
-        return ResponseEntity.ok(createdProject);
+        return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('UPDATE_PROJECT')")
@@ -64,7 +65,7 @@ public class ProjectController {
     @PostMapping("/assignment")
     ResponseEntity<ProjectDepartmentResponse> assignProjectToDepartment(@RequestBody ProjectDepartmentRequest request) {
         ProjectDepartmentResponse assignedProject = projectAssignmentAPI.assignProjectToDepartment(request);
-        return ResponseEntity.ok(assignedProject);
+        return new ResponseEntity<>(assignedProject, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('ASSIGN_PROJECT_DEPARTMENT')")

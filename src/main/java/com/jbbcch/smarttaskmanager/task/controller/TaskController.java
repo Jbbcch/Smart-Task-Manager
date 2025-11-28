@@ -12,6 +12,7 @@ import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
 import com.jbbcch.smarttaskmanager.task.model.enums.TaskStatus;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class TaskController {
             @RequestBody @Valid TaskRequest request
     ) {
         TaskResponse createdTask = taskInternalAPI.createTask(projectId, request);
-        return ResponseEntity.ok(createdTask);
+        return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -80,7 +81,7 @@ public class TaskController {
     @PostMapping("/assignment")
     ResponseEntity<TaskUserResponse> assignTaskToUser(@RequestBody TaskUserRequest request) {
         TaskUserResponse assignedTask = taskAssignmentAPI.assignTaskToUser(request);
-        return ResponseEntity.ok(assignedTask);
+        return new ResponseEntity<>(assignedTask, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('ASSIGN_TASK_USER')")
