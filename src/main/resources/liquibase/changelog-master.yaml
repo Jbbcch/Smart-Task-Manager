@@ -47,10 +47,16 @@ databaseChangeLog:
   - include:
       file: changelogs/organization-management/008-organization-add-fk-constraints.yaml
       relativeToChangelogFile: true
-  # Permissions and Roles
+  # Other
   - include:
       file: changelogs/organization-management/010-create-role-admin.yaml
       relativeToChangelogFile: true
   - include:
       file: changelogs/organization-management/011-create-user-admin.yaml # this one is for testing only
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/organization-management/012-create-role-user.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/organization-management/013-create-global-department.yaml
       relativeToChangelogFile: true

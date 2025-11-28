@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: organization-011
+      author: Jbbcch
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - sqlCheck:
+                expectedResult: 1
+                sql: SELECT COUNT(*) FROM organization_management.roles WHERE id = 1
+      changes:
+        - insert:
+            tableName: roles
+            schemaName: organization_management
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: name
+                  value: user
+              - column:
+                  name: description
+                  value: Default user role
+              - column:
+                  name: created_at
+                  valueDate: 2025-11-28T00:00:00
+              - column:
+                  name: created_by
+                  value: 00000000-0000-0000-0000-000000000000
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |
+              INSERT INTO organization_management.role_permissions (role_id, permission)
+              VALUES
+              (1, 'READ_DEPARTMENT'),
+              (1, 'READ_USER'),
+              (1, 'READ_ROLE'),
+              (1, 'READ_PROJECT'),
+              (1, 'READ_TASK')
