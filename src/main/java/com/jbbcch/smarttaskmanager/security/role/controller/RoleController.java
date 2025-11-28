@@ -2,15 +2,15 @@ package com.jbbcch.smarttaskmanager.security.role.controller;
 
 import com.jbbcch.smarttaskmanager.security.role.api.RoleAssignmentAPI;
 import com.jbbcch.smarttaskmanager.security.role.api.RoleInternalAPI;
-import com.jbbcch.smarttaskmanager.security.role.dto.RoleRequest;
-import com.jbbcch.smarttaskmanager.security.role.dto.RoleResponse;
-import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleRequest;
-import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleResponse;
+import com.jbbcch.smarttaskmanager.security.role.dto.*;
+import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedUserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/roles")
@@ -57,5 +57,11 @@ public class RoleController {
     public ResponseEntity<UserRoleResponse> removeRoleFromUser(@PathVariable Long id) {
         UserRoleResponse response = roleAssignmentAPI.removeRoleFromUserById(id);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/users")
+    public ResponseEntity<List<AssignedUserResponse>> getRoleUsers(@PathVariable Long roleId) {
+        List<AssignedUserResponse> roleUsers = roleAssignmentAPI.getRoleUsersByRoleId(roleId);
+        return ResponseEntity.ok(roleUsers);
     }
 }

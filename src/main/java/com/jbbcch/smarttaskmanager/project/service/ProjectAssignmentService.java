@@ -2,6 +2,7 @@ package com.jbbcch.smarttaskmanager.project.service;
 
 import com.jbbcch.smarttaskmanager.project.api.ProjectAssignmentAPI;
 import com.jbbcch.smarttaskmanager.project.api.external.ProjectAssignmentExternalAPI;
+import com.jbbcch.smarttaskmanager.project.dto.AssignedDepartmentResponse;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentRequest;
 import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentResponse;
 import com.jbbcch.smarttaskmanager.project.dto.external.AssignedProjectResponse;
@@ -54,5 +55,10 @@ public class ProjectAssignmentService implements ProjectAssignmentAPI, ProjectAs
     @Override
     public List<AssignedProjectResponse> getProjectsByDepartmentId(Long departmentId) {
         return assignedProjectRepository.getProjectsByDepartmentId(departmentId);
+    }
+
+    @Override
+    public List<AssignedDepartmentResponse> getDepartmentsByProjectId(Long projectId) {
+        return assignedProjectRepository.getDepartmentsByProjectId(projectId);
     }
 }

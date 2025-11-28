@@ -1,9 +1,13 @@
 package com.jbbcch.smarttaskmanager.task.api;
 
-import com.jbbcch.smarttaskmanager.task.dto.AssignedTaskRequest;
-import com.jbbcch.smarttaskmanager.task.dto.AssignedTaskResponse;
+import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedUserResponse;
+import com.jbbcch.smarttaskmanager.task.dto.TaskUserRequest;
+import com.jbbcch.smarttaskmanager.task.dto.TaskUserResponse;
+
+import java.util.List;
 
 public interface TaskAssignmentAPI {
-    AssignedTaskResponse assignTaskToUser(AssignedTaskRequest request);
-    AssignedTaskResponse removeTaskFromUserById(Long id);
+    TaskUserResponse assignTaskToUser(TaskUserRequest request);
+    TaskUserResponse removeTaskFromUserById(Long id);
+    List<AssignedUserResponse> getUsersByTaskId(Long taskId);
 }

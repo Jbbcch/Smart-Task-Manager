@@ -1,8 +1,11 @@
 package com.jbbcch.smarttaskmanager.task.service;
 
+import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedUserResponse;
 import com.jbbcch.smarttaskmanager.task.api.TaskAssignmentAPI;
-import com.jbbcch.smarttaskmanager.task.dto.AssignedTaskRequest;
-import com.jbbcch.smarttaskmanager.task.dto.AssignedTaskResponse;
+import com.jbbcch.smarttaskmanager.task.api.external.TaskAssignmentExternalAPI;
+import com.jbbcch.smarttaskmanager.task.dto.TaskUserRequest;
+import com.jbbcch.smarttaskmanager.task.dto.TaskUserResponse;
+import com.jbbcch.smarttaskmanager.task.dto.external.AssignedTaskResponse;
 import com.jbbcch.smarttaskmanager.task.mapper.AssignedTaskMapper;
 import com.jbbcch.smarttaskmanager.task.model.entity.AssignedTask;
 import com.jbbcch.smarttaskmanager.task.repository.AssignedTaskRepository;
@@ -12,21 +15,24 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
-public class TaskAssignmentService implements TaskAssignmentAPI {
+public class TaskAssignmentService implements TaskAssignmentAPI, TaskAssignmentExternalAPI {
 
     private final AssignedTaskRepository assignedTaskRepository;
     private final AssignedTaskMapper assignedTaskMapper;
 
     @Override
     @Transactional
-    public AssignedTaskResponse assignTaskToUser(AssignedTaskRequest request) {
-        AssignedTask AssignedTask = assignedTaskMapper.requestToAssignedTask(request);
-        AssignedTask.setAssignedBy(request.getActionBy());
+    public TaskUserResponse assignTaskToUser(TaskUserRequest request) {
+        AssignedTask assignedTask = assignedTaskMapper.requestToAssignedTask(request);
+        assignedTask.setAssignedBy(request.getActionBy());
 
         try {
-            assignedTaskRepository.save(AssignedTask);
+            assignedTaskRepository.save(assignedTask);
         } catch (DataIntegrityViolationException ex) {
             if (ex.getCause() instanceof ConstraintViolationException cve &&
                     "23503".equals(cve.getSQLState())) {  // postgres foreign key violation
@@ -35,15 +41,25 @@ public class TaskAssignmentService implements TaskAssignmentAPI {
             throw ex;
         }
 
-        return assignedTaskMapper.assignedTaskToResponse(AssignedTask);
+        return assignedTaskMapper.assignedTaskToResponse(assignedTask);
     }
 
     @Override
     @Transactional
-    public AssignedTaskResponse removeTaskFromUserById(Long id) {
-        AssignedTask removedProject = assignedTaskRepository.findById(id)
+    public TaskUserResponse removeTaskFromUserById(Long id) {
+        AssignedTask removedTask = assignedTaskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task-User relation not found"));
         assignedTaskRepository.deleteById(id);
-        return assignedTaskMapper.assignedTaskToResponse(removedProject);
+        return assignedTaskMapper.assignedTaskToResponse(removedTask);
+    }
+
+    @Override
+    public List<AssignedUserResponse> getUsersByTaskId(Long taskId) {
+        return assignedTaskRepository.findAssignedUsersByTaskId(taskId);
+    }
+
+    @Override
+    public List<AssignedTaskResponse> getTasksByUserId(UUID userId) {
+        return assignedTaskRepository.findAssignedTasksByUserId(userId);
     }
 }

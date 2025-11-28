@@ -2,10 +2,7 @@ package com.jbbcch.smarttaskmanager.project.controller;
 
 import com.jbbcch.smarttaskmanager.project.api.ProjectAssignmentAPI;
 import com.jbbcch.smarttaskmanager.project.api.ProjectInternalAPI;
-import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentRequest;
-import com.jbbcch.smarttaskmanager.project.dto.ProjectDepartmentResponse;
-import com.jbbcch.smarttaskmanager.project.dto.ProjectRequest;
-import com.jbbcch.smarttaskmanager.project.dto.ProjectResponse;
+import com.jbbcch.smarttaskmanager.project.dto.*;
 import com.jbbcch.smarttaskmanager.task.api.external.TaskExternalAPI;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
 import jakarta.validation.Valid;
@@ -66,5 +63,11 @@ public class ProjectController {
     ResponseEntity<ProjectDepartmentResponse> removeProjectFromDepartmentById(@PathVariable Long id) {
         ProjectDepartmentResponse removedProject = projectAssignmentAPI.removeProjectFromDepartmentById(id);
         return ResponseEntity.ok(removedProject);
+    }
+
+    @GetMapping("/{id}/departments")
+    ResponseEntity<List<AssignedDepartmentResponse>> getDepartmentsByProjectId(@PathVariable Long projectId) {
+        List<AssignedDepartmentResponse> departmentResponses = projectAssignmentAPI.getDepartmentsByProjectId(projectId);
+        return ResponseEntity.ok(departmentResponses);
     }
 }

@@ -1,10 +1,11 @@
 package com.jbbcch.smarttaskmanager.task.controller;
 
+import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedUserResponse;
 import com.jbbcch.smarttaskmanager.task.api.TaskAssignmentAPI;
 import com.jbbcch.smarttaskmanager.task.api.TaskInternalAPI;
 import com.jbbcch.smarttaskmanager.task.api.external.SubtaskExternalAPI;
-import com.jbbcch.smarttaskmanager.task.dto.AssignedTaskRequest;
-import com.jbbcch.smarttaskmanager.task.dto.AssignedTaskResponse;
+import com.jbbcch.smarttaskmanager.task.dto.TaskUserRequest;
+import com.jbbcch.smarttaskmanager.task.dto.TaskUserResponse;
 import com.jbbcch.smarttaskmanager.task.dto.SubtaskResponse;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskRequest;
 import com.jbbcch.smarttaskmanager.task.dto.external.TaskResponse;
@@ -55,14 +56,20 @@ public class TaskController {
     }
 
     @PostMapping("/assignment")
-    ResponseEntity<AssignedTaskResponse> assignProjectToDepartment(@RequestBody AssignedTaskRequest request) {
-        AssignedTaskResponse assignedTask = taskAssignmentAPI.assignTaskToUser(request);
+    ResponseEntity<TaskUserResponse> assignProjectToDepartment(@RequestBody TaskUserRequest request) {
+        TaskUserResponse assignedTask = taskAssignmentAPI.assignTaskToUser(request);
         return ResponseEntity.ok(assignedTask);
     }
 
     @DeleteMapping("/assignment/{id}")
-    ResponseEntity<AssignedTaskResponse> removeProjectFromDepartmentById(@PathVariable Long id) {
-        AssignedTaskResponse removedTask = taskAssignmentAPI.removeTaskFromUserById(id);
+    ResponseEntity<TaskUserResponse> removeProjectFromDepartmentById(@PathVariable Long id) {
+        TaskUserResponse removedTask = taskAssignmentAPI.removeTaskFromUserById(id);
         return ResponseEntity.ok(removedTask);
+    }
+
+    @GetMapping("/{id}/users")
+    ResponseEntity<List<AssignedUserResponse>> getAssignedUsersByTaskId(@PathVariable Long taskId) {
+        List<AssignedUserResponse> assignedUsers = taskAssignmentAPI.getUsersByTaskId(taskId);
+        return ResponseEntity.ok(assignedUsers);
     }
 }

@@ -41,13 +41,13 @@ public class DepartmentController {
         return ResponseEntity.ok(updatedDepartment);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<DepartmentResponse> deleteDepartmentById(@PathVariable Long id) {
         DepartmentResponse deletedDepartment = departmentInternalAPI.deleteDepartmentById(id);
         return ResponseEntity.ok(deletedDepartment);
     }
 
-    @GetMapping("{id}/projects")
+    @GetMapping("/{id}/projects")
     public ResponseEntity<List<AssignedProjectResponse>> getDepartmentProjects(@PathVariable Long departmentId) {
         List<AssignedProjectResponse> assignedProjects = projectAssignmentExternalAPI.getProjectsByDepartmentId(departmentId);
         return ResponseEntity.ok(assignedProjects);

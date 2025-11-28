@@ -2,6 +2,7 @@ package com.jbbcch.smarttaskmanager.security.role.service;
 
 import com.jbbcch.smarttaskmanager.security.role.api.RoleAssignmentAPI;
 import com.jbbcch.smarttaskmanager.security.role.api.external.RoleAssignmentExternalAPI;
+import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedUserResponse;
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleRequest;
 import com.jbbcch.smarttaskmanager.security.role.dto.UserRoleResponse;
 import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedRolesResponse;
@@ -55,5 +56,10 @@ public class RoleAssignmentService implements RoleAssignmentAPI, RoleAssignmentE
     @Override
     public List<AssignedRolesResponse> getUserRolesByUserId(UUID userId) {
         return userRoleRepository.findAssignedRolesByUserId(userId);
+    }
+
+    @Override
+    public List<AssignedUserResponse> getRoleUsersByRoleId(Long roleId) {
+        return userRoleRepository.findAssignedUsersByRoleId(roleId);
     }
 }

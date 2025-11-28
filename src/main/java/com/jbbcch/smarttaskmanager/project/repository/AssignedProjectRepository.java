@@ -1,5 +1,6 @@
 package com.jbbcch.smarttaskmanager.project.repository;
 
+import com.jbbcch.smarttaskmanager.project.dto.AssignedDepartmentResponse;
 import com.jbbcch.smarttaskmanager.project.dto.external.AssignedProjectResponse;
 import com.jbbcch.smarttaskmanager.project.model.entity.AssignedProject;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +19,13 @@ public interface AssignedProjectRepository extends CrudRepository<AssignedProjec
         WHERE ap.departmentId = :departmentId
     """)
     List<AssignedProjectResponse> getProjectsByDepartmentId(Long departmentId);
+
+    @Query("""
+        SELECT new com.jbbcch.smarttaskmanager.project.dto.AssignedDepartmentResponse
+        (d.id, d.name, d.description, ap.assignedAt, ap.assignedBy)
+        FROM AssignedProject ap
+        JOIN Department d ON ap.departmentId = d.id
+        WHERE ap.projectId = :projectId
+    """)
+    List<AssignedDepartmentResponse> getDepartmentsByProjectId(Long projectId);
 }

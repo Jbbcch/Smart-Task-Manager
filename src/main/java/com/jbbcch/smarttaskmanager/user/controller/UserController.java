@@ -2,6 +2,8 @@ package com.jbbcch.smarttaskmanager.user.controller;
 
 import com.jbbcch.smarttaskmanager.security.role.api.external.RoleAssignmentExternalAPI;
 import com.jbbcch.smarttaskmanager.security.role.dto.external.AssignedRolesResponse;
+import com.jbbcch.smarttaskmanager.task.api.external.TaskAssignmentExternalAPI;
+import com.jbbcch.smarttaskmanager.task.dto.external.AssignedTaskResponse;
 import com.jbbcch.smarttaskmanager.user.api.UserInternalAPI;
 import com.jbbcch.smarttaskmanager.user.dto.UserRequest;
 import com.jbbcch.smarttaskmanager.user.dto.UserResponse;
@@ -20,6 +22,7 @@ public class UserController {
 
     private final UserInternalAPI userInternalAPI;
     private final RoleAssignmentExternalAPI roleAssignmentExternalAPI;
+    private final TaskAssignmentExternalAPI taskAssignmentExternalAPI;
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest request) {
@@ -58,5 +61,11 @@ public class UserController {
     public ResponseEntity<List<AssignedRolesResponse>> getUserRoles(@PathVariable UUID userId) {
         List<AssignedRolesResponse> userRoles = roleAssignmentExternalAPI.getUserRolesByUserId(userId);
         return ResponseEntity.ok(userRoles);
+    }
+
+    @GetMapping("/{id}/tasks")
+    ResponseEntity<List<AssignedTaskResponse>> getAssignedTasksByUserId(@PathVariable UUID userId) {
+        List<AssignedTaskResponse> assignedTasks = taskAssignmentExternalAPI.getTasksByUserId(userId);
+        return ResponseEntity.ok(assignedTasks);
     }
 }

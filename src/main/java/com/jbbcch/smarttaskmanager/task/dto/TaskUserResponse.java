@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AssignedTaskResponse {
+public class TaskUserResponse {
     Long id;
     Long taskId;
     UUID userId;
